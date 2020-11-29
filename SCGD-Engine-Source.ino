@@ -9,7 +9,8 @@
 // Headerfile imports
 #include "SCGDEngineGlobalLib.h"
 #include "SCGDNetworkData.h"
-#include "src/SCGDEngineGamesList.h"
+#include "src/DisplayFunctions.h"    // Contains display function prototypes
+#include "src/SCGDEngineGamesList.h" // Contains game prototypes
 
 void setup() {
     // Set serial output baud rate
@@ -19,8 +20,6 @@ void setup() {
     setPinModes();
     initializeDisplay();
     // connectWifi();
-
-    menuTestString();
 }
 
 void loop() {

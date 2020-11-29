@@ -1,8 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Module Name: SCGDEngineGlobalLib.h
 //
-// Description: Headerfile containing global display data for all games
+// Description: Headerfile containing global data for all modules
 ////////////////////////////////////////////////////////////////////////////////
+
+#ifndef SCGDENGINEGLOBALLIB
+#define SCGDENGINEGLOBALLIB
 
 #include "src/FreeFonts.h" // Adding fonts for display output
 
@@ -18,7 +21,7 @@
 // ===== Graphics ==============================================================
 // Imports
 #include <SPI.h>      // Serial Peripheral Interface main library
-#include <TFT_eSPI.h> // Graphics and font library for ILI9341 driver chip
+#include <TFT_eSPI.h> // Graphics/fonts library for ILI9341 driver
 
 // Library instance
 TFT_eSPI tft = TFT_eSPI();
@@ -35,3 +38,5 @@ TFT_eSPI tft = TFT_eSPI();
 
 // Webserver definition
 WiFiServer server(80); // TCP port 80 (reserved for HTTP protocol)
+
+#endif
