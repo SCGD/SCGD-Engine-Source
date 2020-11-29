@@ -130,11 +130,11 @@ void drawMessageBoxThreeLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
     tft.println(line3);
 }
 
-void drawMessageBoxThreeLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
-                              uint16_t line1Color, char *line2,
-                              uint16_t line2Color, char *line3,
-                              uint16_t line3Color, char *line4,
-                              uint16_t line4Color) {
+void drawMessageBoxFourLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
+                             uint16_t line1Color, char *line2,
+                             uint16_t line2Color, char *line3,
+                             uint16_t line3Color, char *line4,
+                             uint16_t line4Color) {
     tft.drawRect(
         // x0
         DISPLAY_POPUP_HORIZ_OFFSET,
