@@ -24,7 +24,7 @@
 #include <TFT_eSPI.h> // Graphics/fonts library for ILI9341 driver
 
 // Display Function Prototypes
-void drawMarginBoundingBox(uint16_t color);
+void drawMarginBoundingBox(TFT_eSPI tft, uint16_t color);
 
 // Display sizing constants
 #define DISPLAY_FULL_WIDTH 240

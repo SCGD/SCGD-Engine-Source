@@ -8,7 +8,7 @@
 // Imports
 #include "../SCGDEngineGlobalLib.h"
 
-void drawMarginBoundingBox(uint16_t color) {
+void drawMarginBoundingBox(TFT_eSPI tft, uint16_t color) {
     tft.drawRect(
         // x0 offset from left border
         STD_WORKING_MARGIN,

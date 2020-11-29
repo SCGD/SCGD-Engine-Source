@@ -24,7 +24,7 @@ void setup() {
     initializeDisplay();
     // connectWifi();
 
-    drawMarginBoundingBox(TFT_WHITE);
+    drawMarginBoundingBox(tft, TFT_WHITE);
 }
 
 void loop() {
