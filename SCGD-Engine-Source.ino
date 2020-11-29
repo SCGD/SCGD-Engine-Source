@@ -94,6 +94,7 @@ void handleMenuSelect() {
                 ;
 
             if (!hasChosenGame) {
+                // TODO: Switch on cursor for choice
                 drawMessageBoxTwoLines(tft, TFT_WHITE,
                                        // Line 1
                                        "  BATTLESHIP  ", TFT_WHITE,
@@ -127,12 +128,16 @@ void menuWelcomePlayer() {
                              "  (Press A!)  ", TFT_YELLOW);
 }
 
+void menuDrawGames() {
+    // TODO: Handle this calculation programmatically
+    battleshipDrawGameIcon(tft, 20, 20);
+    testDrawGameIcon(tft, 90, 20);
+}
+
 void menuDrawSelectionScreen() {
     tft.fillScreen(TFT_BLACK);
     drawMarginBoundingBox(tft, TFT_WHITE);
-
-    // Draw individual games
-    battleshipDrawGameIcon(tft, 20, 20);
+    menuDrawGames();
 
     // Draw cursor
     menuCursor.game = 0; // Start at top left, on battleship
@@ -143,9 +148,7 @@ void menuDrawSelectionScreen() {
 void menuDrawSelectionScreenAgain() {
     tft.fillScreen(TFT_BLACK);
     drawMarginBoundingBox(tft, TFT_WHITE);
-
-    // Draw individual games
-    battleshipDrawGameIcon(tft, 20, 20);
+    menuDrawGames();
 
     // Draw cursor
     menuDrawSelectionBox(menuCursor.game);

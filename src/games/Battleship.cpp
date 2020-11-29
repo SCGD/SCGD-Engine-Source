@@ -19,7 +19,7 @@
 void battleshipDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY) {
     // Place battleship icon from flash memory and draw
     tft.drawBitmap(posX, posY, BATTLESHIPICON_PIXELDATA, 60, 60, TFT_BLUE);
-
+    // Draw bounding box
     tft.drawRect(posX, posY, 60, 60, TFT_WHITE);
 }
 
