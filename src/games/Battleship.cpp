@@ -9,8 +9,10 @@
 #include "../SCGDEngineGamesList.h"
 
 // ===== Game looping ==========================================================
+// TODO: Implement Battleship game event loop
 
 // ===== Controller ============================================================
+// TODO: Implement Battleship game logic
 
 // ===== Display ===============================================================
 
@@ -22,3 +24,5 @@ void battleshipDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY) {
 }
 
 // ===== Webserver =============================================================
+
+// TODO: Implement Battleship webserver

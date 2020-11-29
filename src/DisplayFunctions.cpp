@@ -23,6 +23,11 @@ int calculateVerticalTextOffset(unsigned int lines) {
     return offset;
 }
 
+// ===== Game Over Popups ======================================================
+// TODO: Create Game Over screen with score
+
+// TODO: Create Game Over screen without score
+
 // ===== Display Boxes =========================================================
 void drawMarginBoundingBox(TFT_eSPI tft, uint16_t color) {
     tft.drawRect(

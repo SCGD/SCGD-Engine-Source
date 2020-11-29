@@ -193,3 +193,5 @@ void connectWiFi() {
     // Start webserver
     server.begin();
 }
+
+// TODO: Create menu
