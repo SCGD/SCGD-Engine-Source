@@ -23,8 +23,8 @@
 #include <SPI.h>      // Serial Peripheral Interface main library
 #include <TFT_eSPI.h> // Graphics/fonts library for ILI9341 driver
 
-// Library instance
-TFT_eSPI tft = TFT_eSPI();
+// Display Function Prototypes
+void drawMarginBoundingBox(uint16_t color);
 
 // Display sizing constants
 #define DISPLAY_FULL_WIDTH 240
@@ -35,8 +35,5 @@ TFT_eSPI tft = TFT_eSPI();
 
 // ===== Webserver =============================================================
 #include <WiFi.h>
-
-// Webserver definition
-WiFiServer server(80); // TCP port 80 (reserved for HTTP protocol)
 
 #endif

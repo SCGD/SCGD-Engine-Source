@@ -9,8 +9,11 @@
 // Headerfile imports
 #include "SCGDEngineGlobalLib.h"
 #include "SCGDNetworkData.h"
-#include "src/DisplayFunctions.h"    // Contains display function prototypes
 #include "src/SCGDEngineGamesList.h" // Contains game prototypes
+
+// Creating object instances
+TFT_eSPI tft = TFT_eSPI(); // Display library
+WiFiServer server(80);     // TCP port 80 (reserved for HTTP protocol)
 
 void setup() {
     // Set serial output baud rate
@@ -20,6 +23,8 @@ void setup() {
     setPinModes();
     initializeDisplay();
     // connectWifi();
+
+    drawMarginBoundingBox(TFT_WHITE);
 }
 
 void loop() {
