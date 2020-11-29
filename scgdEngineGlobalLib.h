@@ -25,13 +25,22 @@
 
 // Display Function Prototypes
 void drawMarginBoundingBox(TFT_eSPI tft, uint16_t color);
+void drawMessageBoxOneLine(TFT_eSPI tft, uint16_t boxColor, char *buffer,
+                           uint16_t textColor);
 
 // Display sizing constants
-#define DISPLAY_FULL_WIDTH 240
-#define DISPLAY_FULL_HEIGHT 320
+#define DISPLAY_WIDTH 240
+#define DISPLAY_HEIGHT 320
 #define STD_WORKING_MARGIN 10 // Generally, keep a 10px margin
-#define DISPLAY_MARGINAL_WIDTH 220
-#define DISPLAY_MARGINAL_HEIGHT 300
+#define DISPLAY_POPUP_HORIZ_OFFSET 40
+#define DISPLAY_POPUP_WIDTH 160
+
+// Text sizing constants
+#define TEXT_BOX_HEIGHT 18  // Full size of a line in println() calls
+#define TEXT_BOX_BASELINE 6 // The println cursor is 6px up from bottom
+#define TEXT_CHOSEN_FONT &FreeMono9pt7b
+#define TEXT_BOX_CHAR_WIDTH 14   // Can only fit 14 characters per line in popup
+#define TEXT_BOX_HORIZ_OFFSET 43 // Comfortable text positioning offset
 
 // ===== Webserver =============================================================
 #include <WiFi.h>
