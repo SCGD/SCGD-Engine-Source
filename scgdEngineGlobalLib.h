@@ -27,6 +27,18 @@
 void drawMarginBoundingBox(TFT_eSPI tft, uint16_t color);
 void drawMessageBoxOneLine(TFT_eSPI tft, uint16_t boxColor, char *buffer,
                            uint16_t textColor);
+void drawMessageBoxTwoLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
+                            uint16_t line1Color, char *line2,
+                            uint16_t line2Color);
+void drawMessageBoxThreeLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
+                              uint16_t line1Color, char *line2,
+                              uint16_t line2Color, char *line3,
+                              uint16_t line3Color);
+void drawMessageBoxThreeLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
+                              uint16_t line1Color, char *line2,
+                              uint16_t line2Color, char *line3,
+                              uint16_t line3Color, char *line4,
+                              uint16_t line4Color);
 
 // Display sizing constants
 #define DISPLAY_WIDTH 240
@@ -37,7 +49,7 @@ void drawMessageBoxOneLine(TFT_eSPI tft, uint16_t boxColor, char *buffer,
 
 // Text sizing constants
 #define TEXT_BOX_HEIGHT 18  // Full size of a line in println() calls
-#define TEXT_BOX_BASELINE 6 // The println cursor is 6px up from bottom
+#define TEXT_BOX_BASELINE 3 // The println cursor is 3px up from bottom
 #define TEXT_CHOSEN_FONT &FreeMono9pt7b
 #define TEXT_BOX_CHAR_WIDTH 14   // Can only fit 14 characters per line in popup
 #define TEXT_BOX_HORIZ_OFFSET 43 // Comfortable text positioning offset
