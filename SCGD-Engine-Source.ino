@@ -5,11 +5,17 @@
 //              all individual games
 ////////////////////////////////////////////////////////////////////////////////
 
-// ===== Imports ===============================================================
+// ===== Imports and Globals ===================================================
 // Headerfile imports
 #include "SCGDEngineGlobalLib.h"
 #include "SCGDNetworkData.h"
 #include "src/SCGDEngineGamesList.h" // Contains game prototypes
+
+// Global variables
+#define NUM_OF_GAMES = 1
+int hasEnteredSelection = 0; // Tracks whether player has stopped viewing menu
+
+// ===== Initialization ========================================================
 
 // Creating object instances
 TFT_eSPI tft = TFT_eSPI(); // Display library
@@ -23,10 +29,18 @@ void setup() {
     setPinModes();
     initializeDisplay();
     // connectWifi();
+
+    menuWelcomePlayer();
 }
 
+// ===== Menu looping ==========================================================
+
 void loop() {
-    // put your main code here, to run repeatedly:
+    // First, handle the
+    if (!hasEnteredSelection) {
+        handlePopupClose();
+        return; // Continue to next iteration of loop()
+    }
 }
 
 // ===== Controller ============================================================
@@ -41,6 +55,16 @@ void setPinModes() {
     pinMode(A_BUTTON, INPUT);
 }
 
+void handlePopupClose() {
+    if (digitalRead(A_BUTTON)) {
+        // Wait for unpress
+        while (digitalRead(A_BUTTON))
+            ;
+
+        menuDrawSelectionScreen();
+    }
+}
+
 // ===== Display ===============================================================
 
 void initializeDisplay() {
@@ -48,6 +72,23 @@ void initializeDisplay() {
     tft.init();
     tft.setRotation(0);
     tft.fillScreen(TFT_BLACK);
+}
+
+void menuWelcomePlayer() {
+    drawMessageBoxThreeLines(tft, TFT_WHITE,
+                             // Line 1
+                             "   WELCOME!   ", TFT_WHITE,
+                             // Line 2
+                             "Select a game.", TFT_WHITE,
+                             // Line 3
+                             "  (Press A!)  ", TFT_YELLOW);
+}
+
+void menuDrawSelectionScreen() {
+    tft.fillScreen(TFT_BLACK);
+    drawMarginBoundingBox();
+
+    // Iterate through and draw our individual games
 }
 
 // ===== Webserver =============================================================

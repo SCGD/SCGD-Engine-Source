@@ -21,7 +21,7 @@ int calculateMessageBoxOffset(unsigned int boxes) {
 int calculateVerticalTextOffset(unsigned int lines) {
     int offset = DISPLAY_HEIGHT / 2;                    // Start at midline
     offset -= ((int)lines / 2) * (TEXT_BOX_HEIGHT / 2); // Move up half # lines
-    offset += TEXT_BOX_BASELINE;                        // Add baseline
+    offset -= TEXT_BOX_BASELINE;                        // Add baseline
     return offset;
 }
 
