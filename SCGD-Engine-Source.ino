@@ -7,8 +7,8 @@
 
 // ===== Imports ===============================================================
 // Headerfile imports
-#include "scgdEngineGlobalLib.h"
-#include "src/scgdEngineGamesList.h"
+#include "SCGDEngineGlobalLib.h"
+#include "src/SCGDEngineGamesList.h"
 
 void setup() {
     // put your setup code here, to run once:
