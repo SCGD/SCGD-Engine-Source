@@ -18,7 +18,9 @@ void setup() {
     Serial.println("Beginning setup");
     setPinModes();
     initializeDisplay();
-    connectWifi();
+    // connectWifi();
+
+    menuTestString();
 }
 
 void loop() {
@@ -44,6 +46,13 @@ void initializeDisplay() {
     tft.init();
     tft.setRotation(0);
     tft.fillScreen(TFT_BLACK);
+}
+
+void menuTestString() {
+    // Position (0, 0) with font 2
+    tft.setCursor(0, 0, 2);
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.println("Testing output display");
 }
 
 // ===== Webserver =============================================================
