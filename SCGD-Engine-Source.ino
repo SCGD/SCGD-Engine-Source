@@ -80,7 +80,6 @@ void handlePopupClose() {
 
 void handleMenuSelect() {
     while (true) {
-        // TODO: Implement selection box moving around
         if (digitalRead(UP_BUTTON)) {
             while (digitalRead(UP_BUTTON))
                 ;
