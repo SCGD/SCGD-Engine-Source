@@ -48,14 +48,6 @@ void initializeDisplay() {
     tft.fillScreen(TFT_BLACK);
 }
 
-void menuTestString() {
-    // Position (0, 0) with font size 3
-    tft.setCursor(40, 40);
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
-    tft.setFreeFont(&FreeMono9pt7b); // 9pt Monospaced
-    tft.println("Testing display cursor setup");
-}
-
 // ===== Webserver =============================================================
 
 void connectWiFi() {
