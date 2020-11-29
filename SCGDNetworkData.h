@@ -1,0 +1,9 @@
+////////////////////////////////////////////////////////////////////////////////
+// Module Name: SCGDNetworkData.h
+//
+// Description: Headerfile containing (private) network data
+////////////////////////////////////////////////////////////////////////////////
+
+// Change these values with your network values
+const char *NETWORK_SSID = "YOUR_SSID_HERE";
+const char *NETWORK_PASSWORD = "YOUR_PASSWORD_HERE";
