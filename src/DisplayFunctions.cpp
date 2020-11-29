@@ -8,8 +8,6 @@
 // Imports
 #include "../SCGDEngineGlobalLib.h"
 
-// ===== Text ==================================================================
-
 // ===== Helper functions ======================================================
 int calculateMessageBoxOffset(unsigned int boxes) {
     int offset = DISPLAY_HEIGHT / 2;         // Start at midline

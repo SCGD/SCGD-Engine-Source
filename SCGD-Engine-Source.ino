@@ -86,9 +86,10 @@ void menuWelcomePlayer() {
 
 void menuDrawSelectionScreen() {
     tft.fillScreen(TFT_BLACK);
-    drawMarginBoundingBox();
+    drawMarginBoundingBox(tft, TFT_WHITE);
 
-    // Iterate through and draw our individual games
+    // Draw individual games
+    battleshipDrawGameIcon(tft, STD_WORKING_MARGIN * 2, STD_WORKING_MARGIN * 2);
 }
 
 // ===== Webserver =============================================================
