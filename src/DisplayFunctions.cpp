@@ -77,6 +77,7 @@ void drawMessageBoxOneLine(TFT_eSPI tft, uint16_t boxColor, char *buffer,
     tft.println(buffer);
 }
 
+// TODO: This function doesn't display perfectly (vertical text offset broken)
 void drawMessageBoxTwoLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
                             uint16_t line1Color, char *line2,
                             uint16_t line2Color) {
@@ -115,7 +116,7 @@ void drawMessageBoxTwoLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
         calculateVerticalTextOffset(2));
 
     tft.setTextColor(line1Color);
-    tft.println("This works");
+    tft.println(line1);
     tft.print("    "); // Shift characters from left
     tft.setTextColor(line2Color);
     tft.println(line2);
