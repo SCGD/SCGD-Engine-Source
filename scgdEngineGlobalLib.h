@@ -4,6 +4,8 @@
 // Description: Headerfile containing global display data for all games
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "src/FreeFonts.h" // Adding fonts for display output
+
 // ===== Controller ============================================================
 // Controller/circuit button pin configuration
 #define UP_BUTTON 27

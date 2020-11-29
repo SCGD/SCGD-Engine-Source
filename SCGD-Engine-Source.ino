@@ -52,7 +52,8 @@ void menuTestString() {
     // Position (0, 0) with font size 3
     tft.setCursor(0, 0, 3);
     tft.setTextColor(TFT_WHITE, TFT_BLACK);
-    tft.println("");
+    tft.setFreeFont(&FreeMono9pt7b); // 9pt Monospaced
+    tft.println("Checking font");
 }
 
 // ===== Webserver =============================================================
