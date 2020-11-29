@@ -4,7 +4,7 @@
 // Description: Headerfile containing global display data for all games
 ////////////////////////////////////////////////////////////////////////////////
 
-// ===== Arduino configuration =================================================
+// ===== Controller ============================================================
 // Controller/circuit button pin configuration
 #define UP_BUTTON 27
 #define DOWN_BUTTON 13
@@ -17,6 +17,9 @@
 // Imports
 #include <SPI.h>      // Serial Peripheral Interface main library
 #include <TFT_eSPI.h> // Graphics and font library for ILI9341 driver chip
+
+// Library instance
+TFT_eSPI tft = TFT_eSPI();
 
 // Display sizing constants
 #define DISPLAY_FULL_WIDTH 240
