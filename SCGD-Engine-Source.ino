@@ -12,14 +12,16 @@
 #include "src/SCGDEngineGamesList.h" // Contains game prototypes
 
 // Global variables
-#define MENU_NUM_OF_GAMES 1  // The current number of games
+#define MENU_NUM_OF_GAMES 2  // The current number of games
 #define MENU_ICON_SIZE 60    // Size (px) of an icon, height and width
 int hasEnteredSelection = 0; // Tracks whether player has stopped viewing menu
 int hasChosenGame = 0;       // Tracks whether player has selected game
 typedef struct {
-    int xPos; // Pixel X position
-    int yPos; // Pixel Y position
-    int game; // Game number (from 0 through 8)
+    int xPos;   // Pixel X position
+    int yPos;   // Pixel Y position
+    int row;    // Row (0 indexed)
+    int column; // Column (0 indexed)
+    int game;   // Current selected game (used for switching)
 } menu_cursor_t;
 menu_cursor_t menuCursor; // Tracks current selected game (supports max 9)
 
@@ -79,7 +81,26 @@ void handlePopupClose() {
 void handleMenuSelect() {
     while (true) {
         // TODO: Implement selection box moving around
-        // ...
+        if (digitalRead(UP_BUTTON)) {
+            while (digitalRead(UP_BUTTON))
+                ;
+            menuMoveCursorRelative(-1);
+        }
+        if (digitalRead(DOWN_BUTTON)) {
+            while (digitalRead(DOWN_BUTTON))
+                ;
+            menuMoveCursorRelative(1);
+        }
+        if (digitalRead(LEFT_BUTTON)) {
+            while (digitalRead(LEFT_BUTTON))
+                ;
+            menuMoveCursorRelative(-1);
+        }
+        if (digitalRead(RIGHT_BUTTON)) {
+            while (digitalRead(RIGHT_BUTTON))
+                ;
+            menuMoveCursorRelative(1);
+        }
         if (digitalRead(B_BUTTON)) {
             while (digitalRead(B_BUTTON))
                 ;
@@ -107,6 +128,48 @@ void handleMenuSelect() {
             }
         }
     }
+}
+
+void menuMoveCursor(int row, int column) {
+    // Remove selection box
+    menuRemoveSelectionBox();
+
+    // Set row and column values
+    menuCursor.row = row;
+    menuCursor.column = column;
+
+    menuCursor.xPos = 20 + (row * 70); // 20px margin + 70px over for icons
+    menuCursor.yPos = 20 + (column * 70);
+
+    menuCursor.game = (3 * row) + column; // Used for switching
+
+    // Update display on cursor move
+    menuDrawSelectionBox();
+}
+
+void menuMoveCursorRelative(int position) { // -1 for left, +1 for right
+    // Simplified cursor relative movement
+
+    // Remove current selection box
+    menuRemoveSelectionBox();
+
+    // Calculate and check bounds
+    if (position < 0) menuCursor.game -= 1;
+    if (position > 0) menuCursor.game += 1;
+    // Scroll back to other titles
+    if (menuCursor.game < 0) menuCursor.game = MENU_NUM_OF_GAMES - 1;
+    if (menuCursor.game >= MENU_NUM_OF_GAMES) menuCursor.game = 0;
+
+    // Calculate row and column values
+    menuCursor.row = menuCursor.game / 3;
+    menuCursor.column = menuCursor.game % 3;
+
+    // 20px margin + 70px over for icons
+    menuCursor.xPos = 20 + (menuCursor.column * 70);
+    menuCursor.yPos = 20 + (menuCursor.row * 70);
+
+    // Update display on cursor move
+    menuDrawSelectionBox();
 }
 
 // ===== Display ===============================================================
@@ -140,8 +203,9 @@ void menuDrawSelectionScreen() {
     menuDrawGames();
 
     // Draw cursor
-    menuCursor.game = 0; // Start at top left, on battleship
-    menuDrawSelectionBox(0);
+    menuCursor.xPos = 20;
+    menuCursor.yPos = 20;
+    menuMoveCursor(0, 0); // Start at top left, update cursor
 }
 
 // Same as before, but without re-initializing cursor
@@ -151,27 +215,15 @@ void menuDrawSelectionScreenAgain() {
     menuDrawGames();
 
     // Draw cursor
-    menuDrawSelectionBox(menuCursor.game);
+    menuDrawSelectionBox(); // No need to move cursor, just update visual
 }
 
-menu_cursor_t menuRecalcCursor(int game) {
-    // Create a new cursor structure
-    menu_cursor_t cursor;
-    cursor.game = game;
-    // Calculate X position - Adding 2 margins and icon sizing up to 3x
-    cursor.xPos = 20 + (70 * (game % 3));
-    // Calculate Y position - 2 margins and icon sizing up to 3x
-    cursor.yPos = 20 + (70 * (game / 3));
-
-    return cursor;
-}
-
-void menuDrawSelectionBox(int newGame) {
-    menuCursor = menuRecalcCursor(menuCursor.game); // Recalculate cursor values
+void menuRemoveSelectionBox() {
     // Replace selection box at cursor position with white box
     tft.drawRect(menuCursor.xPos, menuCursor.yPos, 60, 60, TFT_WHITE);
+}
 
-    menuCursor = menuRecalcCursor(newGame); // Create new cursor
+void menuDrawSelectionBox() {
     // Draw a new selection box at the new position
     tft.drawRect(menuCursor.xPos, menuCursor.yPos, 60, 60, TFT_YELLOW);
 }

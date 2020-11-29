@@ -11,6 +11,9 @@
 #include "icons/Battleship.h"
 #include "icons/Test.h"
 
+// ===== Games =================================================================
+// TODO: Create enum for various games and their number values
+
 // ===== Battleship ============================================================
 // Game looping
 // Controller
