@@ -40,6 +40,21 @@ void drawMarginBoundingBox(TFT_eSPI tft, uint16_t color) {
 
 void drawMessageBoxOneLine(TFT_eSPI tft, uint16_t boxColor, char *buffer,
                            uint16_t textColor) {
+
+    // Fill box area with black overlay
+    tft.drawRect(
+        // x0 - One text box height up from center
+        DISPLAY_POPUP_HORIZ_OFFSET,
+        // y0 - Down half height, then up textBox + half margin
+        calculateMessageBoxOffset(1),
+        // Width
+        DISPLAY_POPUP_WIDTH,
+        // Height (down textBox + half margin on top and bottom)
+        TEXT_BOX_HEIGHT + STD_WORKING_MARGIN,
+        // Color
+        TFT_BLACK);
+
+    // Draw box outline
     tft.drawRect(
         // x0 - One text box height up from center
         DISPLAY_POPUP_HORIZ_OFFSET,
@@ -65,6 +80,20 @@ void drawMessageBoxOneLine(TFT_eSPI tft, uint16_t boxColor, char *buffer,
 void drawMessageBoxTwoLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
                             uint16_t line1Color, char *line2,
                             uint16_t line2Color) {
+    // Fill box area with black overlay
+    tft.fillRect(
+        // x0
+        DISPLAY_POPUP_HORIZ_OFFSET,
+        // y0
+        calculateMessageBoxOffset(2),
+        // Width
+        DISPLAY_POPUP_WIDTH,
+        // Height
+        (2 * TEXT_BOX_HEIGHT) + STD_WORKING_MARGIN,
+        // Color
+        TFT_BLACK);
+
+    // Draw box outline
     tft.drawRect(
         // x0
         DISPLAY_POPUP_HORIZ_OFFSET,
@@ -78,7 +107,6 @@ void drawMessageBoxTwoLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
         boxColor);
 
     tft.setFreeFont(TEXT_CHOSEN_FONT);
-
     // Set cursor up to top of bounding box
     tft.setCursor(
         // Horizontal offset for characters
@@ -97,6 +125,20 @@ void drawMessageBoxThreeLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
                               uint16_t line1Color, char *line2,
                               uint16_t line2Color, char *line3,
                               uint16_t line3Color) {
+    // Fill box area with black overlay
+    tft.fillRect(
+        // x0
+        DISPLAY_POPUP_HORIZ_OFFSET,
+        // y0
+        calculateMessageBoxOffset(3),
+        // Width
+        DISPLAY_POPUP_WIDTH,
+        // Height
+        (3 * TEXT_BOX_HEIGHT) + STD_WORKING_MARGIN,
+        // Color
+        TFT_BLACK);
+
+    // Draw box outline
     tft.drawRect(
         // x0
         DISPLAY_POPUP_HORIZ_OFFSET,
@@ -110,7 +152,6 @@ void drawMessageBoxThreeLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
         boxColor);
 
     tft.setFreeFont(TEXT_CHOSEN_FONT);
-
     // Set cursor up to top of bounding box
     tft.setCursor(
         // Horizontal offset for characters
@@ -118,6 +159,7 @@ void drawMessageBoxThreeLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
         // Vertical offset
         calculateVerticalTextOffset(3));
 
+    // Draw text
     tft.setTextColor(line1Color);
     tft.println(line1);
     tft.print("    "); // Shift characters from left
@@ -133,6 +175,20 @@ void drawMessageBoxFourLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
                              uint16_t line2Color, char *line3,
                              uint16_t line3Color, char *line4,
                              uint16_t line4Color) {
+    // Fill box area with black overlay
+    tft.fillRect(
+        // x0
+        DISPLAY_POPUP_HORIZ_OFFSET,
+        // y0
+        calculateMessageBoxOffset(4),
+        // Width
+        DISPLAY_POPUP_WIDTH,
+        // Height
+        (4 * TEXT_BOX_HEIGHT) + STD_WORKING_MARGIN,
+        // Color
+        TFT_BLACK);
+
+    // Draw box outline
     tft.drawRect(
         // x0
         DISPLAY_POPUP_HORIZ_OFFSET,
@@ -146,7 +202,6 @@ void drawMessageBoxFourLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
         boxColor);
 
     tft.setFreeFont(TEXT_CHOSEN_FONT);
-
     // Set cursor up to top of bounding box
     tft.setCursor(
         // Horizontal offset for characters
@@ -154,6 +209,7 @@ void drawMessageBoxFourLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
         // Vertical offset
         calculateVerticalTextOffset(4));
 
+    // Draw text
     tft.setTextColor(line1Color);
     tft.println(line1);
     tft.print("    "); // Shift characters from left
