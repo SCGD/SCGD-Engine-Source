@@ -15,6 +15,7 @@ void setup() {
     // Set serial output baud rate
     Serial.begin(115200);
 
+    Serial.println("Beginning setup");
     setPinModes();
     initializeDisplay();
     connectWifi();
@@ -59,8 +60,8 @@ void connectWiFi() {
     }
 
     // Display WiFi information
-    Serial.println("\nWiFi connected.\nIP address: ");
-    Serial.println(WiFi.localIP());
+    Serial.println("\nWiFi connected\nIP address: ");
+    Serial.print(WiFi.localIP());
 
     // Start webserver
     server.begin();
