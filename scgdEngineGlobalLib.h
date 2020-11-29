@@ -30,3 +30,6 @@ TFT_eSPI tft = TFT_eSPI();
 
 // ===== Webserver =============================================================
 #include <WiFi.h>
+
+// Webserver definition
+WiFiServer server(80); // TCP port 80 (reserved for HTTP protocol)

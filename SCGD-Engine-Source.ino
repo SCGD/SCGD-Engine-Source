@@ -8,10 +8,16 @@
 // ===== Imports ===============================================================
 // Headerfile imports
 #include "SCGDEngineGlobalLib.h"
+#include "SCGDNetworkData.h"
 #include "src/SCGDEngineGamesList.h"
 
 void setup() {
-    // put your setup code here, to run once:
+    // Set serial output baud rate
+    Serial.begin(115200);
+
+    setPinModes();
+    initializeDisplay();
+    connectWifi();
 }
 
 void loop() {
@@ -20,6 +26,42 @@ void loop() {
 
 // ===== Controller ============================================================
 
+void setPinModes() {
+    Serial.println("Setting input pins on controller");
+    pinMode(UP_BUTTON, INPUT);
+    pinMode(DOWN_BUTTON, INPUT);
+    pinMode(LEFT_BUTTON, INPUT);
+    pinMode(RIGHT_BUTTON, INPUT);
+    pinMode(B_BUTTON, INPUT);
+    pinMode(A_BUTTON, INPUT);
+}
+
 // ===== Display ===============================================================
 
+void initializeDisplay() {
+    Serial.println("Initializing display");
+    tft.init();
+    tft.setRotation(0);
+    tft.fillScreen(TFT_BLACK);
+}
+
 // ===== Webserver =============================================================
+
+void connectWiFi() {
+    Serial.print("Connecting to:");
+    Serial.println(NETWORK_SSID);
+    WiFi.begin(NETWORK_SSID, NETWORK_PASSWORD);
+
+    // Wait until connected
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    // Display WiFi information
+    Serial.println("\nWiFi connected.\nIP address: ");
+    Serial.println(WiFi.localIP());
+
+    // Start webserver
+    server.begin();
+}
