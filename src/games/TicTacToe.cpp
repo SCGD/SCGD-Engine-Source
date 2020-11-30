@@ -11,12 +11,13 @@
 // Globals
 #define DISPLAYBLOCKSIZE 60 // Sizing of display
 typedef struct {
-    int xPos;   // Contains pixel X coordinate of top left
-    int yPos;   // Contains pixel Y coordinate
+    int x;      // Contains pixel X coordinate of top left
+    int y;      // Contains pixel Y coordinate
     int row;    // Used to calculate yPos
     int column; // Used to calculate xPos
 } tictactoe_cursor_t;
 tictactoe_cursor_t tictactoeCursor;
+tictactoe_cursor_t tictactoeCPUCursor;
 
 int gameGrid[3][3] = {0};
 int tictactoeFinish = 0; // Indicator for completion of game
@@ -59,6 +60,7 @@ void tictactoePlayGame(TFT_eSPI tft) {
 
     // reset indicator bits to 0
     tictactoeFinish = 0;
+    tictactoeEventLoop(tft);
 }
 
 // ===== Game looping ==========================================================
@@ -118,10 +120,10 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
             while (digitalRead(UPBUTTON))
                 ;
             // bounds check
-            if (cursor.y > 0) {
+            if (tictactoeCursor.y > 0) {
                 // erase previous cursor
                 tictactoeEraseCursor(tft);
-                cursor.y -= 1;
+                tictactoeCursor.y -= 1;
                 // draw new cursor
                 tictactoeDrawCursor(tft);
             }
@@ -129,10 +131,10 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
         if (digitalRead(DOWNBUTTON)) {
             while (digitalRead(DOWNBUTTON))
                 ;
-            if (cursor.y < 2) { // Bottom of bounding box
+            if (tictactoeCursor.y < 2) { // Bottom of bounding box
                 // erase previous cursor
                 tictactoeEraseCursor(tft);
-                cursor.y += 1;
+                tictactoeCursor.y += 1;
                 // draw new cursor
                 tictactoeDrawCursor(tft);
             }
@@ -140,10 +142,10 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
         if (digitalRead(LEFTBUTTON)) {
             while (digitalRead(LEFTBUTTON))
                 ;
-            if (cursor.x > 0) { // Left of bounding box
+            if (tictactoeCursor.x > 0) { // Left of bounding box
                 // erase previous cursor
                 tictactoeEraseCursor(tft);
-                cursor.x -= 1;
+                tictactoeCursor.x -= 1;
                 // draw new cursor
                 tictactoeDrawCursor(tft);
             }
@@ -151,10 +153,10 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
         if (digitalRead(RIGHTBUTTON)) {
             while (digitalRead(RIGHTBUTTON))
                 ;
-            if (cursor.x < 2) { // Right of bounding box
+            if (tictactoeCursor.x < 2) { // Right of bounding box
                 // erase previous cursor
                 tictactoeEraseCursor(tft);
-                cursor.x += 1;
+                tictactoeCursor.x += 1;
                 // draw new cursor
                 tictactoeDrawCursor(tft);
             }
@@ -164,9 +166,9 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
             while (digitalRead(ABUTTON) == 1)
                 ;
             // if the space is empty
-            if (!(gameGrid[cursor.x][cursor.y])) {
+            if (!(gameGrid[tictactoeCursor.y][tictactoeCursor.x])) {
                 // 1 represents user placement of an X
-                gameGrid[cursor.x][cursor.y] = 1;
+                gameGrid[tictactoeCursor.y][tictactoeCursor.x] = 1;
                 // display user play
                 tictactoeDisplayUserPlay(tft);
                 break; // stop looping functionality
@@ -289,16 +291,54 @@ void tictactoeDrawGameGrid(TFT_eSPI tft) {
 
 //*X and O display
 // TODO: display user and Cpu play
-void tictactoeDisplayUserPlay(TFT_eSPI tft) {}
+void tictactoeDisplayUserPlay(TFT_eSPI tft) {
+    // left to right up to down line
+    tft.drawLine(
+        // x0 coordinate left side of block right 5
+        30 + DISPLAYBLOCKSIZE * tictactoeCursor.x + 5,
+        // y0 coordinate top of block down 5
+        70 + DISPLAYBLOCKSIZE * tictactoeCursor.y + 5,
+        // x final coordinate right side of block left 5
+        90 + DISPLAYBLOCKSIZE * tictactoeCursor.x - 5,
+        // y final coordinate bottom of block up 5
+        130 + DISPLAYBLOCKSIZE * tictactoeCursor.y - 5,
+        // color
+        TFT_BLUE);
+
+    // right to left up to down line
+    tft.drawLine(
+        // x0 coordinate right side of block left 5
+        90 + DISPLAYBLOCKSIZE * tictactoeCursor.x - 5,
+        // y0 coordinate top of block down 5
+        70 + DISPLAYBLOCKSIZE * tictactoeCursor.y + 5,
+        // x final coordinate left side of block right 5
+        30 + DISPLAYBLOCKSIZE * tictactoeCursor.x + 5,
+        // y final coordinate bottom of block up 5
+        130 + DISPLAYBLOCKSIZE * tictactoeCursor.y - 5,
+        // color
+        TFT_BLUE);
+}
+
+void tictactoeDisplayCPUPlay(TFT_eSPI tft) {
+    tft.drawCircle(
+        // center x coordinate left side of block + 30 right to center
+        30 + 30 + DISPLAYBLOCKSIZE * tictactoeCPUCursor.x,
+        // center y coordinate top of block + 30 down to center
+        70 + 30 + DISPLAYBLOCKSIZE * tictactoeCPUCursor.y,
+        // radius
+        25,
+        // color
+        TFT_RED);
+}
 
 //*Cursor display
 void tictactoeDrawCursor(TFT_eSPI tft) {
     // cursor indicator similar to battleship but with new block size
     tft.drawRect(
         // x coordinate
-        30 + DISPLAYBLOCKSIZE * cursor.x + 1,
+        30 + DISPLAYBLOCKSIZE * tictactoeCursor.x + 1,
         // y coordinate
-        70 + DISPLAYBLOCKSIZE * cursor.y + 1,
+        70 + DISPLAYBLOCKSIZE * tictactoeCursor.y + 1,
         // height
         blockSideSize,
         // width
@@ -311,9 +351,9 @@ void tictactoeEraseCursor(TFT_eSPI tft) {
     // draw over a previous cursor with black to "erase it"
     tft.drawRect(
         // x coordinate
-        30 + DISPLAYBLOCKSIZE * cursor.x + 1,
+        30 + DISPLAYBLOCKSIZE * tictactoeCursor.x + 1,
         // y coordinate
-        70 + DISPLAYBLOCKSIZE * cursor.y + 1,
+        70 + DISPLAYBLOCKSIZE * tictactoeCursor.y + 1,
         // height
         blockSideSize,
         // width
