@@ -53,6 +53,7 @@ void loop() {
     }
 
     handleMenuSelect();
+    menuConnectWebserver();
 }
 
 // ===== Controller ============================================================
@@ -282,4 +283,77 @@ void connectWiFi() {
     server.begin();
 }
 
-// TODO: Create menu webserver
+void menuConnectWebserver() {
+    WiFiClient menuClient = server.available(); // Listen for incoming clients
+    unsigned long currentTime = millis();       // Current time (unix epoch)
+    unsigned long previousTime = 0;             // Used for timeout calculation
+    String header;                              // Stores the request
+
+    if (menuClient) {
+        // Create timeout parameters
+        currentTime = millis();
+        previousTime = currentTime;
+
+        Serial.println("New client.");
+        String currentLine = ""; // Stores incoming client data
+
+        // Loop while client is connected
+        while (menuClient.connected() &&
+               currentTime - previousTime <= TIMEOUT_TIME) {
+            currentTime = millis(); // Log time
+
+            if (menuClient.available()) {
+                char c = menuClient.read(); // Read a byte from client
+                Serial.write(c);            // Write on serial out
+                header += c;
+                if (c == '\n') { // On newline
+                    // Signal for HTTP request end is \n\n, or \n and empty line
+                    if (currentLine.length() == 0) {
+                        // Create response header
+                        menuClient.println("HTTP/1.1 200 OK");
+                        menuClient.println("Content-type:text/html");
+                        menuClient.println("Connection: close");
+                        menuClient.println();
+
+                        // Display HTML webpage
+                        menuClient.println(
+                            "<!DOCTYPE html><html> <head> "
+                            "<style>body{font-family: monospace; text-align: "
+                            "center; align-items: center;}h1{font-size: "
+                            "5rem;}p{font-size: 2rem;}i{font-size: 1rem; "
+                            "color: blue;}.lds-dual-ring{display: "
+                            "inline-block; width: 80px; height: "
+                            "80px;}.lds-dual-ring:after{content: "
+                            "; display: block; width: 64px; height: 64px; "
+                            "margin: 8px; border-radius: 50%; border: 6px "
+                            "solid #000; border-color: #000 transparent #000 "
+                            "transparent; animation: lds-dual-ring 1.2s linear "
+                            "infinite;}@keyframes lds-dual-ring{0%{transform: "
+                            "rotate(0deg);}100%{transform: "
+                            "rotate(360deg);}}</style> </head> <body> "
+                            "<h1>Please wait!</h1> <div "
+                            "class=\"lds-dual-ring\"></div><p>Player is "
+                            "currently selecting a "
+                            "game.</p><p><i>State College Game Engine - Micro "
+                            "Game Engine Platform</i></p></body></html>");
+
+                        // End HTTP response
+                        menuClient.println();
+                        break;
+                    } else {
+                        currentLine = "";
+                    }
+                } else if (c != '\r') {
+                    // Add all input excluding carriage return to currentLine
+                    currentLine += c;
+                }
+            }
+        }
+        header = ""; // Reset header
+
+        // Close connection after client connection end
+        menuClient.stop();
+        Serial.println("Client disconnected.");
+        Serial.println("");
+    }
+}

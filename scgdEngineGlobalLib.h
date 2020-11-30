@@ -57,4 +57,6 @@ void drawMessageBoxFourLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
 // ===== Webserver =============================================================
 #include <WiFi.h>
 
+#define TIMEOUT_TIME 2000 // 2000ms before timeout
+
 #endif
