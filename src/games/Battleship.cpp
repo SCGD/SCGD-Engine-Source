@@ -168,6 +168,8 @@ void battleshipDrawStartGamePopup(TFT_eSPI tft) {
 }
 
 void battleshipDrawInitializeGameBoard(TFT_eSPI tft) {
+    tft.fillScreen(TFT_BLACK); // Clear screen
+
     int i; // Iterable tracking size of game grid
     // Start by drawing vertical lines
     for (i = 40; i <= 200; i += 20) {
