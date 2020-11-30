@@ -66,6 +66,13 @@ void battleshipEventLoop(TFT_eSPI tft) {
         score += battleshipPlayPlayerTurn(tft);
         shotsTaken += 1;
 
+        if (score == (4 + 3 + 2)) {
+            score += TOTAL_SHOTS - shotsTaken;
+            battleshipUpdateScreen(tft_score);
+            delay(1000);
+            break;
+        }
+
         battleshipUpdateScreen(tft, score);
     }
 
