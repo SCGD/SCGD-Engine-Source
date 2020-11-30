@@ -182,6 +182,8 @@ void battleshipDrawInitializeGameBoard(TFT_eSPI tft) {
         tft.drawLine(40, i, 200, i, TFT_WHITE);
     }
 
+    cursor.xPos = 40;
+    cursor.yPos = 40; // Set initial cursor xy pixel position before redrawing
     battleshipMoveCursor(tft, 0, 0);
 }
 
