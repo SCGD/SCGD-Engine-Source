@@ -24,6 +24,9 @@ typedef struct {
     int game;   // Current selected game (used for switching)
 } menu_cursor_t;
 menu_cursor_t menuCursor; // Tracks current selected game (supports max 9)
+unsigned long currentTime = millis(); // Current time (unix epoch)
+unsigned long previousTime = 0;       // Used for timeout calculation
+String header;                        // Stores the request
 
 // ===== Initialization ========================================================
 
@@ -38,7 +41,7 @@ void setup() {
     Serial.println("Beginning setup");
     setPinModes();
     initializeDisplay();
-    // connectWifi();
+    connectWiFi();
 
     menuWelcomePlayer();
 }
@@ -46,6 +49,8 @@ void setup() {
 // ===== Menu looping ==========================================================
 
 void loop() {
+    // Send WiFi data
+    menuConnectWebserver(); // Earlier call due to menu event loop shenanigans
     // First, handle the popup
     if (!hasEnteredSelection) {
         handlePopupClose();
@@ -53,7 +58,6 @@ void loop() {
     }
 
     handleMenuSelect();
-    menuConnectWebserver();
 }
 
 // ===== Controller ============================================================
@@ -159,6 +163,9 @@ void handleMenuSelect() {
                 menuDrawSelectionScreenAgain();
             }
         }
+
+        // Send WiFi data
+        menuConnectWebserver();
     }
 }
 
@@ -262,6 +269,8 @@ void menuDrawSelectionBox() {
     tft.drawRect(menuCursor.xPos, menuCursor.yPos, 60, 60, TFT_YELLOW);
 }
 
+void menuDisplayIP(IPAddress ip) { tft.println(ip.toString()); }
+
 // ===== Webserver =============================================================
 
 void connectWiFi() {
@@ -281,13 +290,12 @@ void connectWiFi() {
 
     // Start webserver
     server.begin();
+
+    menuDisplayIP(WiFi.localIP());
 }
 
 void menuConnectWebserver() {
     WiFiClient menuClient = server.available(); // Listen for incoming clients
-    unsigned long currentTime = millis();       // Current time (unix epoch)
-    unsigned long previousTime = 0;             // Used for timeout calculation
-    String header;                              // Stores the request
 
     if (menuClient) {
         // Create timeout parameters
@@ -323,8 +331,8 @@ void menuConnectWebserver() {
                             "5rem;}p{font-size: 2rem;}i{font-size: 1rem; "
                             "color: blue;}.lds-dual-ring{display: "
                             "inline-block; width: 80px; height: "
-                            "80px;}.lds-dual-ring:after{content: "
-                            "; display: block; width: 64px; height: 64px; "
+                            "80px;}.lds-dual-ring:after{content: \" \"; "
+                            "display: block; width: 64px; height: 64px; "
                             "margin: 8px; border-radius: 50%; border: 6px "
                             "solid #000; border-color: #000 transparent #000 "
                             "transparent; animation: lds-dual-ring 1.2s linear "
