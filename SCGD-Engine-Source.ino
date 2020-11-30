@@ -12,7 +12,7 @@
 #include "src/SCGDEngineGamesList.h" // Contains game prototypes
 
 // Global variables
-#define MENU_NUM_OF_GAMES 2  // The current number of games
+#define MENU_NUM_OF_GAMES 3  // The current number of games
 #define MENU_ICON_SIZE 60    // Size (px) of an icon, height and width
 int hasEnteredSelection = 0; // Tracks whether player has stopped viewing menu
 int hasChosenGame = 0;       // Tracks whether player has selected game
@@ -122,6 +122,13 @@ void handleMenuSelect() {
                                                // Line 2
                                                "   (A) Play   ", TFT_YELLOW);
                         break;
+                    case TICTACTOE_E:
+                        drawMessageBoxTwoLines(tft, TFT_WHITE,
+                                               // Line 1
+                                               "  TIC-TAC-TOE ", TFT_WHITE,
+                                               // Line 2
+                                               "   (A) Play   ", TFT_YELLOW);
+                        break;
                     case TEST_E:
                         drawMessageBoxTwoLines(tft, TFT_WHITE,
                                                // Line 1
@@ -137,6 +144,9 @@ void handleMenuSelect() {
                 switch (menuCursor.game) {
                     case BATTLESHIP_E:
                         // TODO: Play battleship
+                        break;
+                    case TICTACTOE_E:
+                        // TODO: Play tictactoe
                         break;
                     case TEST_E:
                         // TODO: Test
@@ -211,7 +221,8 @@ void menuWelcomePlayer() {
 void menuDrawGames() {
     // TODO: Handle this calculation programmatically
     battleshipDrawGameIcon(tft, 20, 20);
-    testDrawGameIcon(tft, 90, 20);
+    tictactoeDrawGameIcon(tft, 90, 20);
+    testDrawGameIcon(tft, 160, 20);
 }
 
 void menuDrawSelectionScreen() {
@@ -266,4 +277,4 @@ void connectWiFi() {
     server.begin();
 }
 
-// TODO: Create menu
+// TODO: Create menu webserver

@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Module Name: Battleship
+// Module Name: TicTacToe
 //
 // Description: Contains function and calling code for the (currently
-//              single-player) game Battleship
+//              single-player) game Tic-Tac-Toe
 ////////////////////////////////////////////////////////////////////////////////
 
 // Imports
@@ -16,13 +16,13 @@
 
 // ===== Display ===============================================================
 
-void battleshipDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY) {
+void tictactoeDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY) {
     // Place battleship icon from flash memory and draw
-    tft.drawBitmap(posX, posY, BATTLESHIPICON_PIXELDATA, 60, 60, TFT_BLUE);
+    tft.drawBitmap(posX, posY, TICTACTOEICON_PIXELDATA, 60, 60, TFT_DARKGREEN);
     // Draw bounding box
     tft.drawRect(posX, posY, 60, 60, TFT_WHITE);
 }
 
 // ===== Webserver =============================================================
 
-// TODO: Implement battleship webserver
+// TODO: Implement tictactoe webserver
