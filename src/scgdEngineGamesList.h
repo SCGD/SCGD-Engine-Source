@@ -15,15 +15,45 @@
 // ===== Games =================================================================
 typedef enum { BATTLESHIP_E = 0, TICTACTOE_E = 1, TEST_E = 2 } GAME_E;
 
-//  Battleship
-void battleshipDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
+// ===== Battleship ============================================================
+// Initialization
 void battleshipPlayGame(TFT_eSPI tft);
+// Game looping
+void battleshipEventLoop(TFT_eSPI tft);
+// Controller
+void battleshipPlayPlayerTurn(TFT_eSPI tft);
+void battleshipResetPlayerShots();
+// Display
+void battleshipDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
+void battleshipDrawStartGamePopup(TFT_eSPI tft);
+void battleshipDrawInitializeGameBoard(TFT_eSPI tft);
+void battleshipMoveCursor(TFT_eSPI tft, int row, int column);
+void battleshipUpdateScreen(TFT_eSPI tft, int score);
 
-// TicTacToe
-void tictactoeDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
+// ===== TicTacToe =============================================================
+// Initialization
 void tictactoePlayGame(TFT_eSPI tft);
+// Game looping
+void tictactoeEventLoop(TFT_eSPI tft);
+// Controller
+void tictactoePlayPlayerTurn(TFT_eSPI tft);
+void tictactoePlayCPUTurn(TFT_eSPI tft);
+void tictactoeResetGrid();
+int tictactoeFilled();
+int tictactoeWinner();
+int horizontalWin();
+int verticalWin();
+int diagonalWin();
+// Display
+void tictactoeDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
+void tictactoeStartDisplay(TFT_eSPI tft);
+void tictactoeDrawGameGrid(TFT_eSPI tft);
+void tictactoeDisplayUserPlay(TFT_eSPI tft);
+void tictactoeDisplayCPUPlay(TFT_eSPI tft);
+void tictactoeDrawCursor(TFT_eSPI tft);
+void tictactoeEraseCursor(TFT_eSPI tft);
 
-// Test
+// ===== Test ==================================================================
 void testDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
 
 #endif

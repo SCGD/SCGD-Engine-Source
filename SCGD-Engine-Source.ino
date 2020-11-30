@@ -143,10 +143,10 @@ void handleMenuSelect() {
                 tft.fillScreen(TFT_BLACK);
                 switch (menuCursor.game) {
                     case BATTLESHIP_E:
-                        battleshipPlayGame();
+                        battleshipPlayGame(tft);
                         break;
                     case TICTACTOE_E:
-                        tictactoePlayGame();
+                        tictactoePlayGame(tft);
                         break;
                     case TEST_E:
                         // TODO: Test
