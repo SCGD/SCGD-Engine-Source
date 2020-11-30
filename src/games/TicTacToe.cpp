@@ -116,8 +116,8 @@ void tictactoeEventLoop(TFT_eSPI tft) {
 void tictactoePlayPlayerTurn(TFT_eSPI tft) {
     // waiting for button input
     while (true) {
-        if (digitalRead(UPBUTTON)) {
-            while (digitalRead(UPBUTTON))
+        if (digitalRead(UP_BUTTON)) {
+            while (digitalRead(UP_BUTTON))
                 ;
             // bounds check
             if (tictactoeCursor.y > 0) {
@@ -128,8 +128,8 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
                 tictactoeDrawCursor(tft);
             }
         }
-        if (digitalRead(DOWNBUTTON)) {
-            while (digitalRead(DOWNBUTTON))
+        if (digitalRead(DOWN_BUTTON)) {
+            while (digitalRead(DOWN_BUTTON))
                 ;
             if (tictactoeCursor.y < 2) { // Bottom of bounding box
                 // erase previous cursor
@@ -139,8 +139,8 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
                 tictactoeDrawCursor(tft);
             }
         }
-        if (digitalRead(LEFTBUTTON)) {
-            while (digitalRead(LEFTBUTTON))
+        if (digitalRead(LEFT_BUTTON)) {
+            while (digitalRead(LEFT_BUTTON))
                 ;
             if (tictactoeCursor.x > 0) { // Left of bounding box
                 // erase previous cursor
@@ -150,8 +150,8 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
                 tictactoeDrawCursor(tft);
             }
         }
-        if (digitalRead(RIGHTBUTTON)) {
-            while (digitalRead(RIGHTBUTTON))
+        if (digitalRead(RIGHT_BUTTON)) {
+            while (digitalRead(RIGHT_BUTTON))
                 ;
             if (tictactoeCursor.x < 2) { // Right of bounding box
                 // erase previous cursor
@@ -161,9 +161,9 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
                 tictactoeDrawCursor(tft);
             }
         }
-        if (digitalRead(ABUTTON)) {
+        if (digitalRead(A_BUTTON)) {
             // stall until button is unpressed
-            while (digitalRead(ABUTTON) == 1)
+            while (digitalRead(A_BUTTON) == 1)
                 ;
             // if the space is empty
             if (!(gameGrid[tictactoeCursor.y][tictactoeCursor.x])) {
@@ -188,7 +188,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
         if (!(gameGrid[lastPlayY][lastPlayX - 1])) {
             tictactoeCPUCursor.y = lastPlayY;
             tictactoeCPUCursor.x = lastPlayX - 1;
-            tictactoeDisplayCPUPlay();
+            tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
             playMade = 1;
         }
@@ -198,7 +198,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
         if (!(gameGrid[lastPlayY][lastPlayX + 1])) {
             tictactoeCPUCursor.y = lastPlayY;
             tictactoeCPUCursor.x = lastPlayX + 1;
-            tictactoeDisplayCPUPlay();
+            tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
             playMade = 1;
         }
@@ -208,7 +208,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
         if (!(gameGrid[lastPlayY - 1][lastPlayX])) {
             tictactoeCPUCursor.y = lastPlayY - 1;
             tictactoeCPUCursor.x = lastPlayX;
-            tictactoeDisplayCPUPlay();
+            tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
             playMade = 1;
         }
@@ -218,7 +218,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
         if (!(gameGrid[lastPlayY + 1][lastPlayX])) {
             tictactoeCPUCursor.y = lastPlayY + 1;
             tictactoeCPUCursor.x = lastPlayX;
-            tictactoeDisplayCPUPlay();
+            tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
             playMade = 1;
         }
@@ -230,7 +230,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
                     // 2 represents a CPU placement of an O
                     tictactoeCPUCursor.y = i;
                     tictactoeCPUCursor.x = j;
-                    tictactoeDisplayCPUPlay();
+                    tictactoeDisplayCPUPlay(tft);
                     gameGrid[i][j] = 2;
                     break; // exit the for loops
                 }
