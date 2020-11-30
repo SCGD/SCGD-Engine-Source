@@ -77,7 +77,7 @@ void battleshipEventLoop(TFT_eSPI tft) {
     }
 
     // Score calculation
-    if (score == (4 + 3 + 2)) { // Total number of ship parts
+    if (score >= (4 + 3 + 2)) { // Total number of ship parts
         drawMessageBoxTwoLines(tft, TFT_WHITE,
                                // Line 1
                                "   Game win   ", TFT_WHITE,
