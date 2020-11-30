@@ -54,6 +54,8 @@ void tictactoePlayGame(TFT_eSPI tft) {
 
     // draws game grid
     tictactoeDrawGameGrid(tft);
+    // draw cursor
+    tictactoeDrawCursor(tft);
 
     // reset indicator bits to 0
     tictactoeFinish = 0;
@@ -67,13 +69,15 @@ void tictactoeEventLoop(TFT_eSPI tft) {
         // if the game has not been finished
         if (!tictactoeFinish) {
             // have player take a turn
-            tictactoeplayPlayerTurn(tft);
+            tictactoePlayPlayerTurn(tft);
             gameChecker = tictactoeFilled() + tictactoeWinner();
             // check if the game is finished before having CPU play
             if (!tictactoeFinish) {
                 delay(1000);
-                tictactoeplayCPUTurn(tft);
+                tictactoePlayCPUTurn(tft);
+                gameChecker = tictactoeFilled() + tictactoeWinner();
             }
+
         } else {
             // if it is a draw
             if (tictactoeFilled() && !tictactoeWinner()) {
@@ -106,6 +110,73 @@ void tictactoeEventLoop(TFT_eSPI tft) {
 
 // ===== Controller ============================================================
 
+// * Turns
+void tictactoePlayPlayerTurn(TFT_eSPI tft) {
+    // waiting for button input
+    while (true) {
+        if (digitalRead(UPBUTTON)) {
+            while (digitalRead(UPBUTTON))
+                ;
+            // bounds check
+            if (cursor.y > 0) {
+                // erase previous cursor
+                tictactoeEraseCursor(tft);
+                cursor.y -= 1;
+                // draw new cursor
+                tictactoeDrawCursor(tft);
+            }
+        }
+        if (digitalRead(DOWNBUTTON)) {
+            while (digitalRead(DOWNBUTTON))
+                ;
+            if (cursor.y < 2) { // Bottom of bounding box
+                // erase previous cursor
+                tictactoeEraseCursor(tft);
+                cursor.y += 1;
+                // draw new cursor
+                tictactoeDrawCursor(tft);
+            }
+        }
+        if (digitalRead(LEFTBUTTON)) {
+            while (digitalRead(LEFTBUTTON))
+                ;
+            if (cursor.x > 0) { // Left of bounding box
+                // erase previous cursor
+                tictactoeEraseCursor(tft);
+                cursor.x -= 1;
+                // draw new cursor
+                tictactoeDrawCursor(tft);
+            }
+        }
+        if (digitalRead(RIGHTBUTTON)) {
+            while (digitalRead(RIGHTBUTTON))
+                ;
+            if (cursor.x < 2) { // Right of bounding box
+                // erase previous cursor
+                tictactoeEraseCursor(tft);
+                cursor.x += 1;
+                // draw new cursor
+                tictactoeDrawCursor(tft);
+            }
+        }
+        if (digitalRead(ABUTTON)) {
+            // stall until button is unpressed
+            while (digitalRead(ABUTTON) == 1)
+                ;
+            // if the space is empty
+            if (!(gameGrid[cursor.x][cursor.y])) {
+                // 1 represents user placement of an X
+                gameGrid[cursor.x][cursor.y] = 1;
+                // display user play
+                tictactoeDisplayUserPlay(tft);
+                break; // stop looping functionality
+            }
+        }
+    }
+}
+
+void tictactoePlayCPUTurn(TFT_eSPI tft) {}
+// * General helpers
 void tictactoeResetGrid() {
     int i;
     int j;
@@ -117,6 +188,7 @@ void tictactoeResetGrid() {
     }
 }
 
+// * Game completion checkers
 // tictactoe grid filled checker
 int tictactoeFilled() {
     int i, j;
@@ -213,6 +285,41 @@ void tictactoeDrawGameGrid(TFT_eSPI tft) {
     for (i = 70; i <= 250; i += 60) {
         tft.drawLine(30, i, 210, i, TFT_WHITE);
     }
+}
+
+//*X and O display
+// TODO: display user and Cpu play
+void tictactoeDisplayUserPlay(TFT_eSPI tft) {}
+
+//*Cursor display
+void tictactoeDrawCursor(TFT_eSPI tft) {
+    // cursor indicator similar to battleship but with new block size
+    tft.drawRect(
+        // x coordinate
+        30 + DISPLAYBLOCKSIZE * cursor.x + 1,
+        // y coordinate
+        70 + DISPLAYBLOCKSIZE * cursor.y + 1,
+        // height
+        blockSideSize,
+        // width
+        blockSideSize,
+        // color
+        TFT_GREEN);
+}
+
+void tictactoeEraseCursor(TFT_eSPI tft) {
+    // draw over a previous cursor with black to "erase it"
+    tft.drawRect(
+        // x coordinate
+        30 + DISPLAYBLOCKSIZE * cursor.x + 1,
+        // y coordinate
+        70 + DISPLAYBLOCKSIZE * cursor.y + 1,
+        // height
+        blockSideSize,
+        // width
+        blockSideSize,
+        // color
+        TFT_BLACK);
 }
 // ===== Webserver =============================================================
 
