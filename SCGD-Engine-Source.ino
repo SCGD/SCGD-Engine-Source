@@ -83,6 +83,7 @@ void handleMenuSelect() {
         if (digitalRead(UP_BUTTON)) {
             while (digitalRead(UP_BUTTON))
                 ;
+            // TODO: Add debouncing delay
             menuMoveCursorRelative(-1);
         }
         if (digitalRead(DOWN_BUTTON)) {
