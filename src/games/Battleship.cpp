@@ -241,7 +241,7 @@ void battleshipUpdateScreen(TFT_eSPI tft, int score) {
     }
 
     // Draw score and shots remaining
-    tft.fillRect(40, 180, 160, 50, TFT_BLACK); // Remove previous counter
+    tft.fillRect(40, 200, 160, 50, TFT_BLACK); // Remove previous counter
     tft.setCursor(40, 221);
     tft.setFreeFont(TEXT_CHOSEN_FONT);
     tft.setTextColor(TFT_WHITE);
