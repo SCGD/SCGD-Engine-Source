@@ -154,6 +154,7 @@ void handleMenuSelect() {
                 }
 
                 hasChosenGame = 0; // Prevents issues with double pressing
+                menuDrawSelectionScreenAgain();
             }
         }
     }
