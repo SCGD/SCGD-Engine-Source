@@ -321,7 +321,3 @@ void battleshipUpdateScreen(TFT_eSPI tft, int score) {
     tft.setCursor(40, 221 + 18 + 3); // Offset char height + baseline height
     tft.println(shotsLine);
 }
-
-// ===== Webserver =============================================================
-
-// TODO: Implement battleship webserver

@@ -434,7 +434,3 @@ void tictactoeEraseCursor(TFT_eSPI tft) {
         // color
         TFT_BLACK);
 }
-
-// ===== Webserver =============================================================
-
-// TODO: Implement tictactoe webserver
