@@ -140,6 +140,7 @@ int battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
 }
 
 void battleshipResetPlayerShots() {
+    shotsTaken = 0; // Re-initialize shots to zero
     int row, col;
     for (row = 0; row < 8; row++) {
         for (col = 0; col < 8; col++) {
