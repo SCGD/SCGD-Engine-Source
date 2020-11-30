@@ -33,7 +33,7 @@ int shotsTaken;               // Number of shots taken
 
 // ===== Initialization ========================================================
 
-void battleshipPlayGame(TFT_eSPI tft) {
+int battleshipPlayGame(TFT_eSPI tft) {
     // Start game with popup
     battleshipDrawStartGamePopup(tft);
     while (true) {
