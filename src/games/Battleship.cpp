@@ -217,7 +217,7 @@ void battleshipUpdateScreen(TFT_eSPI tft, int score) {
                         // y0
                         40 + (row * 20) + 1,
                         // Height, width, color
-                        20, 20, TFT_RED);
+                        19, 19, TFT_RED);
                 } else {
                     tft.fillRect(
                         // x0
@@ -225,7 +225,7 @@ void battleshipUpdateScreen(TFT_eSPI tft, int score) {
                         // y0
                         40 + (row * 20) + 1,
                         // Height, width, color
-                        20, 20, TFT_BLUE);
+                        19, 19, TFT_BLUE);
                 }
             }
         }
