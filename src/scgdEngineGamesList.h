@@ -21,6 +21,7 @@ void battleshipPlayGame(TFT_eSPI tft);
 // Game looping
 void battleshipEventLoop(TFT_eSPI tft);
 // Controller
+void createGrid();
 int battleshipPlayPlayerTurn(TFT_eSPI tft);
 void battleshipResetPlayerShots();
 // Display

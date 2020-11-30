@@ -18,18 +18,19 @@ typedef struct {
     int column; // Used to calculate xPos
 } battleship_cursor_t;
 battleship_cursor_t cursor;
-const int shipPositions[8][8] = {
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 4 represents a piece of a 4-length ship
-    {0, 0, 0, 0, 0, 0, 0, 0}, // 3 represents 3, etc.
-    {0, 0, 0, 0, 0, 0, 0, 0}, //
-    {0, 0, 0, 4, 4, 4, 4, 0}, //
-    {3, 3, 3, 0, 0, 0, 0, 0}, //
-    {0, 0, 0, 0, 0, 0, 0, 0}, //
-    {0, 0, 0, 0, 0, 0, 0, 0}, //
-    {0, 0, 0, 0, 2, 2, 0, 0}  //
-};                            // Contains ship positions
-int playerShots[8][8] = {0};  // Contains shots taken
-int shotsTaken;               // Number of shots taken
+// const int shipPositions[8][8] = {
+//     {0, 0, 0, 0, 0, 0, 0, 0}, // 4 represents a piece of a 4-length ship
+//     {0, 0, 0, 0, 0, 0, 0, 0}, // 3 represents 3, etc.
+//     {0, 0, 0, 0, 0, 0, 0, 0}, //
+//     {0, 0, 0, 4, 4, 4, 4, 0}, //
+//     {3, 3, 3, 0, 0, 0, 0, 0}, //
+//     {0, 0, 0, 0, 0, 0, 0, 0}, //
+//     {0, 0, 0, 0, 0, 0, 0, 0}, //
+//     {0, 0, 0, 0, 2, 2, 0, 0}  //
+// };                            // Contains ship positions
+int shipPositions[8][8] = {0};
+int playerShots[8][8] = {0}; // Contains shots taken
+int shotsTaken;              // Number of shots taken
 
 // ===== Initialization ========================================================
 
@@ -42,6 +43,7 @@ void battleshipPlayGame(TFT_eSPI tft) {
                 ;
 
             battleshipResetPlayerShots();
+            createGrid();
             battleshipDrawInitializeGameBoard(tft);
             break; // Leave loop
         }
@@ -100,6 +102,63 @@ void battleshipEventLoop(TFT_eSPI tft) {
 }
 
 // ===== Controller ============================================================
+
+void createGrid() {
+    int row, col;
+    for (row = 0; row < 8; row++) {
+        for (col = 0; col < 8; col++) {
+            shipPositions[row][col] = 0;
+        }
+    }
+
+    // size 2 ship
+    int ship2Rotate = rand() % 2;
+    // size 3
+    int ship3Rotate = rand() % 2;
+    // size 4
+    int ship4Rotate = rand() % 2;
+    int ship2X = rand() % 3;
+    int ship2Y = rand() % 3;
+    int ship3X = rand() % 2;
+    int ship3Y = rand() % 2;
+
+    int ship4Pos = rand() % 4;
+
+    // vertical
+    if (ship2Rotate) {
+        shipPositions[ship2Y][ship2X] = 2;
+        shipPositions[ship2Y + 1][ship2X] = 2;
+    }
+    // horizontal
+    else {
+        shipPositions[ship2Y][ship2X] = 2;
+        shipPositions[ship2Y][ship2X + 1] = 2;
+    }
+    if (ship3Rotate) {
+        shipPositions[ship3Y + 4][ship3X] = 3;
+        shipPositions[ship3Y + 5][ship3X] = 3;
+        shipPositions[ship3Y + 6][ship3X] = 3;
+    }
+    // horizontal
+    else {
+        shipPositions[ship3Y][ship3X] = 3;
+        shipPositions[ship3Y][ship3X + 1] = 3;
+        shipPositions[ship3Y][ship3X + 2] = 3;
+    }
+    if (ship4Rotate) {
+        shipPositions[0][ship4Pos + 4] = 4;
+        shipPositions[1][ship4Pos + 4] = 4;
+        shipPositions[2][ship4Pos + 4] = 4;
+        shipPositions[3][ship4Pos + 4] = 4;
+    }
+    // horizontal
+    else {
+        shipPositions[ship4Pos][4] = 4;
+        shipPositions[ship4Pos][5] = 4;
+        shipPositions[ship4Pos][6] = 4;
+        shipPositions[ship4Pos][7] = 4;
+    }
+}
 
 int battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
 
