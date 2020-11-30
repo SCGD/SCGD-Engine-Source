@@ -152,7 +152,7 @@ void handleMenuSelect() {
                         battleshipPlayGame(tft);
                         break;
                     case TICTACTOE_E:
-                        tictactoePlayGame(tft);
+                        tictactoePlayGame(tft, server);
                         break;
                     case TEST_E:
                         // TODO: Test

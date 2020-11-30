@@ -32,9 +32,9 @@ void battleshipUpdateScreen(TFT_eSPI tft, int score);
 
 // ===== TicTacToe =============================================================
 // Initialization
-void tictactoePlayGame(TFT_eSPI tft);
+void tictactoePlayGame(TFT_eSPI tft, WiFiServer server);
 // Game looping
-void tictactoeEventLoop(TFT_eSPI tft);
+void tictactoeEventLoop(TFT_eSPI tft, WiFiServer server);
 // Controller
 void tictactoePlayPlayerTurn(TFT_eSPI tft);
 void tictactoePlayCPUTurn(TFT_eSPI tft);
@@ -53,7 +53,7 @@ void tictactoeDisplayCPUPlay(TFT_eSPI tft);
 void tictactoeDrawCursor(TFT_eSPI tft);
 void tictactoeEraseCursor(TFT_eSPI tft);
 // Webserver
-void tictactoeConnectWebserver();
+void tictactoeConnectWebserver(WiFiServer server);
 
 // ===== Test ==================================================================
 void testDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
