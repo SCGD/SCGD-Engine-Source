@@ -189,46 +189,45 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
     // find where last play for user was
     int lastPlayX = tictactoeCursor.x;
     int lastPlayY = tictactoeCursor.y;
-    int playMade = 0;
     int i, j;
     // check to the left for free space
-    if (lastPlayX && !playMade) {
+    if (lastPlayX) {
         if (!(gameGrid[lastPlayY][lastPlayX - 1])) {
             tictactoeCPUCursor.y = lastPlayY;
             tictactoeCPUCursor.x = lastPlayX - 1;
             tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
-            playMade = 1;
+            return;
         }
     }
     // check to the right for free space
-    if ((lastPlayX < 2) && !playMade) {
+    if (lastPlayX < 2) {
         if (!(gameGrid[lastPlayY][lastPlayX + 1])) {
             tictactoeCPUCursor.y = lastPlayY;
             tictactoeCPUCursor.x = lastPlayX + 1;
             tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
-            playMade = 1;
+            return;
         }
     }
     // check down
-    if (lastPlayY && !playMade) {
+    if (lastPlayY) {
         if (!(gameGrid[lastPlayY - 1][lastPlayX])) {
             tictactoeCPUCursor.y = lastPlayY - 1;
             tictactoeCPUCursor.x = lastPlayX;
             tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
-            playMade = 1;
+            return;
         }
     }
     // check up
-    if ((lastPlayY < 2) && !playMade) {
+    if (lastPlayY < 2) {
         if (!(gameGrid[lastPlayY + 1][lastPlayX])) {
             tictactoeCPUCursor.y = lastPlayY + 1;
             tictactoeCPUCursor.x = lastPlayX;
             tictactoeDisplayCPUPlay(tft);
             gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
-            playMade = 1;
+            return;
         }
     } else {
         for (i = 0; i < 3; i++) {
