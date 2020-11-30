@@ -239,7 +239,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
                     tictactoeCPUCursor.x = j;
                     tictactoeDisplayCPUPlay(tft);
                     gameGrid[i][j] = 2;
-                    break; // exit the for loops
+                    return; // exit the for loops
                 }
             }
         }
