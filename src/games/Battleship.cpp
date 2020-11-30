@@ -174,12 +174,14 @@ void battleshipDrawInitializeGameBoard(TFT_eSPI tft) {
     // Start by drawing vertical lines
     for (i = 40; i <= 200; i += 20) {
         // Input params: x0, y0, x1, y1, color
-        tft.drawLine(i, 80, i, 240, TFT_WHITE); // Draw line y=i
+        tft.drawLine(i, 40, i, 200, TFT_WHITE); // Draw line y=i
     }
     // Reuse i to draw vertical lines
-    for (i = 80; i <= 240; i += 20) {
+    for (i = 40; i <= 200; i += 20) {
         tft.drawLine(40, i, 200, i, TFT_WHITE);
     }
+
+    battleshipMoveCursor(tft, 0, 0);
 }
 
 void battleshipMoveCursor(TFT_eSPI tft, int row, int column) {
