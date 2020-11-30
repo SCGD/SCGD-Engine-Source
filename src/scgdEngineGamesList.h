@@ -15,25 +15,15 @@
 // ===== Games =================================================================
 typedef enum { BATTLESHIP_E = 0, TICTACTOE_E = 1, TEST_E = 2 } GAME_E;
 
-// ===== Battleship ============================================================
-// Game looping
-// Controller
-// Display
+//  Battleship
 void battleshipDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
-// Webserver
+void battleshipPlayGame(TFT_eSPI tft);
 
-// ===== TicTacToe =============================================================
-// Game looping
-// Controller
-// Display
+// TicTacToe
 void tictactoeDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
-// Webserver
+void tictactoePlayGame(TFT_eSPI tft);
 
-// ===== Test ==================================================================
-// Game looping
-// Controller
-// Display
+// Test
 void testDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
-// Webserver
 
 #endif
