@@ -24,6 +24,7 @@ int tictactoeFinish = 0; // Indicator for completion of game
 char CPUWins[15] = "   CPU Wins!  ";
 char UserWins[15] = "  User Wins!  ";
 char drawWins[15] = "    Draw!     ";
+int gameState; // 0: ongoing, 1: CPU, 2: User, 3: Draw
 
 // ===== Initialization ========================================================
 
@@ -68,6 +69,7 @@ void tictactoePlayGame(TFT_eSPI tft) {
 void tictactoeEventLoop(TFT_eSPI tft) {
     int gameChecker;
     while (true) {
+        tictactoeConnectWebserver();
         // if the game has not been finished
         if (!tictactoeFinish) {
             // have player take a turn
@@ -79,7 +81,6 @@ void tictactoeEventLoop(TFT_eSPI tft) {
                 tictactoePlayCPUTurn(tft);
                 gameChecker = tictactoeFilled() + tictactoeWinner();
             }
-
         } else {
             // if it is a draw
             if (tictactoeFilled() && !tictactoeWinner()) {
@@ -88,6 +89,7 @@ void tictactoeEventLoop(TFT_eSPI tft) {
                                        drawWins, TFT_WHITE,
                                        // line 2
                                        "   (A) Home   ", TFT_YELLOW);
+                gameState = 3;
             }
             // if user wins
             if (tictactoeWinner() == 1) {
@@ -96,6 +98,7 @@ void tictactoeEventLoop(TFT_eSPI tft) {
                                        UserWins, TFT_WHITE,
                                        // line 2
                                        "   (A) Home   ", TFT_YELLOW);
+                gameState = 2;
             }
             // if cpu wins
             if (tictactoeWinner() == 2) {
@@ -104,9 +107,11 @@ void tictactoeEventLoop(TFT_eSPI tft) {
                                        CPUWins, TFT_WHITE,
                                        // line 2
                                        "   (A) Home   ", TFT_YELLOW);
+                gameState = 1
             }
 
             while (true) {
+                tictactoeConnectWebserver();
                 if (digitalRead(A_BUTTON) || digitalRead(B_BUTTON)) {
                     while (digitalRead(A_BUTTON) || digitalRead(B_BUTTON))
                         ;
@@ -248,6 +253,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
 }
 // * General helpers
 void tictactoeResetGrid() {
+    gameState = 0; // Game is now ongoing
     int i;
     int j;
     // iterates through gameGrid and resets everything
@@ -436,4 +442,109 @@ void tictactoeEraseCursor(TFT_eSPI tft) {
 
 // ===== Webserver =============================================================
 
-// TODO: Implement tictactoe webserver
+void tictactoeConnectWebserver() {
+    WiFiClient tictactoeClient = server.available(); // Listen for clients
+
+    if (tictactoeClient) {
+        // Create timeout parameters
+        currentTime = millis();
+        previousTime = currentTime;
+
+        Serial.println("New client.");
+        String currentLine = ""; // Stores incoming client data
+
+        // Loop while client is connected
+        while (tictactoeClient.connected() &&
+               currentTime - previousTime <= timeoutTime) {
+            currentTime = millis(); // Log time
+
+            if (tictactoeClient.available()) {
+                char c = tictactoeClient.read(); // Read a byte from client
+                Serial.write(c);                 // Write on serial out
+                header += c;
+                if (c == '\n') { // On newline
+                    // Signal for HTTP request end is \n\n, or \n and empty line
+                    if (currentLine.length() == 0) {
+                        // Create response header
+                        tictactoeClient.println("HTTP/1.1 200 OK");
+                        tictactoeClient.println("Content-type:text/html");
+                        tictactoeClient.println("Connection: close");
+                        tictactoeClient.println();
+
+                        // Display HTML webpage
+                        tictactoeClient.println(
+                            "<!DOCTYPE html><html> <head> <style>:root{--blue: "
+                            "#003c9c; --red: #751813;}body{align-items: "
+                            "center; font-family: monospace, serif; "
+                            "text-align: center;}table{text-align: center; "
+                            "font-size: 10rem; font-family: monospace; "
+                            "border-collapse: collapse; margin-left: auto; "
+                            "margin-right: auto; width: 30rem;}td{border: "
+                            "0.25rem solid; border-color: rgba(0, 0, 0, 0.05); "
+                            "height: 10rem; transition: border-color 0.5s "
+                            "ease;}blue{background: none; color: "
+                            "var(--blue);}red{background: none; color: "
+                            "var(--red);}h1{font-size: 10rem; margin-bottom: "
+                            "0rem; margin-top: 5rem;}p {font-size: "
+                            "2rem;}</style> </head> <body> "
+                            "<h1> <mark class=\"blue\">TIC-</mark> <mark "
+                            "class=\"red\">TAC-</mark> <mark "
+                            "class=\"blue\">TOE</mark> </h1> <table>");
+
+                        // Iterate through and draw table as fit
+                        int row, col;
+                        for (row = 0; row < 2; row++) {
+                            tictactoeClient.println("<tr>");
+                            for (col = 0; col < 2; col++) {
+                                if (gameGrid[row][col] == 1) { // User
+                                    tictactoeClient.println(
+                                        "<td class=\"blue\">X<\td>");
+                                } else if (gameGrid[row][col] == 2) { // CPU
+                                    tictactoeClient.println(
+                                        "<td class=\"red\">O<\td>");
+                                } else {
+                                    tictactoeClient.println("<td><\td>");
+                                }
+                            }
+                            tictactoeClient.println("<\tr>");
+                        }
+                        tictactoeClient.println("<\table>");
+
+                        // Determine winner
+                        if (gameState == 0) {               // In progress
+                            tictactoeClient.println("<p>"); // Empty
+                        }
+                        if (gameState == 1) { // CPU win
+                            tictactoeClient.println("<p class=\"red\">");
+                            tictactoeClient.println(CPUWins);
+
+                        } else if (gameState == 2) { // User win
+                            tictactoeClient.println("<p class=\"blue\">");
+                            tictactoeClient.println(UserWins);
+                        } else { // Draw
+                            tictactoeClient.println("<p>");
+                            tictactoeClient.println(drawWins);
+                        }
+
+                        tictactoeClient.println("<\p></body></html>");
+
+                        // End HTTP response
+                        tictactoeClient.println();
+                        break;
+                    } else {
+                        currentLine = "";
+                    }
+                } else if (c != '\r') {
+                    // Add all input excluding carriage return to currentLine
+                    currentLine += c;
+                }
+            }
+        }
+        header = ""; // Reset header
+
+        // Close connection after client connection end
+        tictactoeClient.stop();
+        Serial.println("Client disconnected.");
+        Serial.println("");
+    }
+}

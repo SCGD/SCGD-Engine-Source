@@ -52,6 +52,8 @@ void tictactoeDisplayUserPlay(TFT_eSPI tft);
 void tictactoeDisplayCPUPlay(TFT_eSPI tft);
 void tictactoeDrawCursor(TFT_eSPI tft);
 void tictactoeEraseCursor(TFT_eSPI tft);
+// Webserver
+void tictactoeConnectWebserver();
 
 // ===== Test ==================================================================
 void testDrawGameIcon(TFT_eSPI tft, int16_t posX, int16_t posY);
