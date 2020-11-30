@@ -12,7 +12,7 @@
 #include "icons/Test.h"
 
 // ===== Games =================================================================
-// TODO: Create enum for various games and their number values
+typedef enum { BATTLESHIP_E = 0, TEST_E = 1 } GAME_E;
 
 // ===== Battleship ============================================================
 // Game looping

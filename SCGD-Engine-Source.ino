@@ -114,16 +114,34 @@ void handleMenuSelect() {
                 ;
 
             if (!hasChosenGame) {
-                // TODO: Switch on cursor for choice
-                drawMessageBoxTwoLines(tft, TFT_WHITE,
-                                       // Line 1
-                                       "  BATTLESHIP  ", TFT_WHITE,
-                                       // Line 2
-                                       "   (A) Play   ", TFT_YELLOW);
+                switch (menuCursor.game) {
+                    case BATTLESHIP_E:
+                        drawMessageBoxTwoLines(tft, TFT_WHITE,
+                                               // Line 1
+                                               "  BATTLESHIP  ", TFT_WHITE,
+                                               // Line 2
+                                               "   (A) Play   ", TFT_YELLOW);
+                        break;
+                    case TEST_E:
+                        drawMessageBoxTwoLines(tft, TFT_WHITE,
+                                               // Line 1
+                                               "     TEST     ", TFT_WHITE,
+                                               // Line 2
+                                               "   (A) Play   ", TFT_YELLOW);
+                        break;
+                }
+
                 hasChosenGame = 1;
-            } else {
-                // TODO: Play battleship
+            } else { // Player has chosen and confirmed a game
                 tft.fillScreen(TFT_BLACK);
+                switch (menuCursor.game) {
+                    case BATTLESHIP_E:
+                        // TODO: Play battleship
+                        break;
+                    case TEST_E:
+                        // TODO: Test
+                        break;
+                }
             }
         }
     }
