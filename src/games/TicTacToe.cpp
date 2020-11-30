@@ -478,7 +478,7 @@ void tictactoeConnectWebserver(WiFiServer server) {
                         tictactoeClient.println(
                             "<!DOCTYPE html><html> <head> <style>:root{--blue: "
                             "#003c9c; --red: #751813;}body{align-items: "
-                            "center; font-family: monospace, serif; "
+                            "center; font-family: monospace; "
                             "text-align: center;}table{text-align: center; "
                             "font-size: 10rem; font-family: monospace; "
                             "border-collapse: collapse; margin-left: auto; "
@@ -501,17 +501,17 @@ void tictactoeConnectWebserver(WiFiServer server) {
                             for (col = 0; col < 2; col++) {
                                 if (gameGrid[row][col] == 1) { // User
                                     tictactoeClient.println(
-                                        "<td class=\"blue\">X<\\td>");
+                                        "<td class=\"blue\">X</td>");
                                 } else if (gameGrid[row][col] == 2) { // CPU
                                     tictactoeClient.println(
-                                        "<td class=\"red\">O<\\td>");
+                                        "<td class=\"red\">O</td>");
                                 } else {
-                                    tictactoeClient.println("<td><\\td>");
+                                    tictactoeClient.println("<td></td>");
                                 }
                             }
-                            tictactoeClient.println("<\\tr>");
+                            tictactoeClient.println("</tr>");
                         }
-                        tictactoeClient.println("<\\table>");
+                        tictactoeClient.println("</table>");
 
                         // Determine winner
                         if (gameState == 0) {               // In progress
@@ -529,7 +529,7 @@ void tictactoeConnectWebserver(WiFiServer server) {
                             tictactoeClient.println(drawWins);
                         }
 
-                        tictactoeClient.println("<\p></body></html>");
+                        tictactoeClient.println("</p></body></html>");
 
                         // End HTTP response
                         tictactoeClient.println();
