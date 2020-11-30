@@ -291,7 +291,7 @@ int horizontalWin() {
     for (i = 0; i < 3; i++) {
         if ((gameGrid[i][0] == gameGrid[i][1]) &&
             (gameGrid[i][0] == gameGrid[i][2])) {
-            return i;
+            return gameGrid[i][0];
         }
     }
     return 0;
@@ -304,7 +304,7 @@ int verticalWin() {
     for (i = 0; i < 3; i++) {
         if ((gameGrid[0][i] == gameGrid[1][i]) &&
             (gameGrid[0][i] == gameGrid[2][i])) {
-            return i;
+            return gameGrid[0][i];
         }
     }
     return 0;
