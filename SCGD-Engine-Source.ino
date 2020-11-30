@@ -180,12 +180,13 @@ void menuMoveCursorRelative(int position) { // -1 for left, +1 for right
     // Remove current selection box
     menuRemoveSelectionBox();
 
-    // Calculate and check bounds
-    if (position < 0) menuCursor.game -= 1;
-    if (position > 0) menuCursor.game += 1;
-    // Scroll back to other titles
-    if (menuCursor.game < 0) menuCursor.game = MENU_NUM_OF_GAMES - 1;
-    if (menuCursor.game >= MENU_NUM_OF_GAMES) menuCursor.game = 0;
+    // Bounds checking
+    if (position > 0 && menuCursor.game < MENU_NUM_OF_GAMES - 1) { // Right
+        menuCursor.game += 1;
+    }
+    if (position < 0 && menuCursor.game > 0) { // Left
+        menuCursor.game -= 1;
+    }
 
     // Calculate row and column values
     menuCursor.row = menuCursor.game / 3;
