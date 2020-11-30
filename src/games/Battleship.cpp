@@ -83,6 +83,14 @@ void battleshipEventLoop(TFT_eSPI tft) {
                                // Line 2
                                "   (A) Home   ", TFT_YELLOW);
     }
+    while (true) {
+        if (digitalRead(A_BUTTON) || digitalRead(B_BUTTON)) {
+            while (digitalRead(A_BUTTON) || digitalRead(B_BUTTON))
+                ;
+
+            return; // This will exit the game only on input press
+        }
+    }
 }
 
 // ===== Controller ============================================================

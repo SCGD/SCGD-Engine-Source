@@ -118,7 +118,7 @@ void drawMessageBoxTwoLines(TFT_eSPI tft, uint16_t boxColor, char *line1,
         // Horizontal offset for characters
         TEXT_BOX_HORIZ_OFFSET,
         // Vertical offset
-        calculateVerticalTextOffset(2));
+        calculateVerticalTextOffset(2) + 3); // Adding slight offset
 
     tft.setTextColor(line1Color);
     tft.println(line1);

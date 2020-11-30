@@ -105,7 +105,15 @@ void tictactoeEventLoop(TFT_eSPI tft) {
                                        // line 2
                                        "   (A) Home   ", TFT_YELLOW);
             }
-            return; // This will be exiting the game
+
+            while (true) {
+                if (digitalRead(A_BUTTON) || digitalRead(B_BUTTON)) {
+                    while (digitalRead(A_BUTTON) || digitalRead(B_BUTTON))
+                        ;
+
+                    return; // This will exit the game only on input press
+                }
+            }
         }
     }
 }
@@ -269,7 +277,7 @@ int tictactoeFilled() {
 }
 // adds the win functions together to determine the winner
 int tictactoeWinner() {
-    if (horizontalWin() + verticalWin() + diagonalWin()) {
+    if ((horizontalWin() + verticalWin() + diagonalWin()) != 0) {
         tictactoeFinish = 1;
     }
     return (horizontalWin() + verticalWin() + diagonalWin());
