@@ -279,8 +279,9 @@ int tictactoeFilled() {
 int tictactoeWinner() {
     if ((horizontalWin() + verticalWin() + diagonalWin()) != 0) {
         tictactoeFinish = 1;
+        return (horizontalWin() + verticalWin() + diagonalWin());
     }
-    return (horizontalWin() + verticalWin() + diagonalWin());
+    return 0;
 }
 
 // outputs 1 for User Win 2 for CPU win else 0
@@ -288,7 +289,8 @@ int horizontalWin() {
     int i;
     // iterate through each row checking if the row is equal
     for (i = 0; i < 3; i++) {
-        if (gameGrid[i][0] == gameGrid[i][1] == gameGrid[i][2]) {
+        if ((gameGrid[i][0] == gameGrid[i][1]) &&
+            (gameGrid[i][0] == gameGrid[i][2])) {
             return i;
         }
     }
@@ -300,7 +302,8 @@ int verticalWin() {
     int i;
     // iterate through each column checking if the column is equal
     for (i = 0; i < 3; i++) {
-        if (gameGrid[0][i] == gameGrid[1][i] == gameGrid[2][i]) {
+        if ((gameGrid[0][i] == gameGrid[1][i]) &&
+            (gameGrid[0][i] == gameGrid[2][i])) {
             return i;
         }
     }
@@ -310,11 +313,13 @@ int verticalWin() {
 // outputs 1 for User Win 2 for CPU win else 0
 int diagonalWin() {
     // left to right diagonal
-    if (gameGrid[0][0] == gameGrid[1][1] == gameGrid[2][2]) {
+    if ((gameGrid[0][0] == gameGrid[1][1]) &&
+        (gameGrid[0][0] == gameGrid[2][2])) {
         return gameGrid[0][0];
     }
     // right to left diagonal
-    if (gameGrid[0][2] == gameGrid[1][1] == gameGrid[2][0]) {
+    if ((gameGrid[0][2] == gameGrid[1][1]) &&
+        (gameGrid[0][2] == gameGrid[2][0])) {
         return gameGrid[0][2];
     }
     return 0;
