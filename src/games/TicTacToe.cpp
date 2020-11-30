@@ -244,6 +244,7 @@ void tictactoePlayCPUTurn(TFT_eSPI tft) {
             }
         }
     }
+    // TODO: Implement extra hard mode
 }
 // * General helpers
 void tictactoeResetGrid() {
