@@ -177,7 +177,67 @@ void tictactoePlayPlayerTurn(TFT_eSPI tft) {
     }
 }
 
-void tictactoePlayCPUTurn(TFT_eSPI tft) {}
+void tictactoePlayCPUTurn(TFT_eSPI tft) {
+    // find where last play for user was
+    int lastPlayX = tictactoeCursor.x;
+    int lastPlayY = tictactoeCursor.y;
+    int playMade = 0;
+    int i, j;
+    // check to the left for free space
+    if (lastPlayX && !playMade) {
+        if (!(gameGrid[lastPlayY][lastPlayX - 1])) {
+            tictactoeCPUCursor.y = lastPlayY;
+            tictactoeCPUCursor.x = lastPlayX - 1;
+            tictactoeDisplayCPUPlay();
+            gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
+            playMade = 1;
+        }
+    }
+    // check to the right for free space
+    if ((lastPlayX < 2) && !playMade) {
+        if (!(gameGrid[lastPlayY][lastPlayX + 1])) {
+            tictactoeCPUCursor.y = lastPlayY;
+            tictactoeCPUCursor.x = lastPlayX + 1;
+            tictactoeDisplayCPUPlay();
+            gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
+            playMade = 1;
+        }
+    }
+    // check down
+    if (lastPlayY && !playMade) {
+        if (!(gameGrid[lastPlayY - 1][lastPlayX])) {
+            tictactoeCPUCursor.y = lastPlayY - 1;
+            tictactoeCPUCursor.x = lastPlayX;
+            tictactoeDisplayCPUPlay();
+            gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
+            playMade = 1;
+        }
+    }
+    // check up
+    if ((lastPlayY < 2) && !playMade) {
+        if (!(gameGrid[lastPlayY + 1][lastPlayX])) {
+            tictactoeCPUCursor.y = lastPlayY + 1;
+            tictactoeCPUCursor.x = lastPlayX;
+            tictactoeDisplayCPUPlay();
+            gameGrid[tictactoeCPUCursor.y][tictactoeCPUCursor.x] = 2;
+            playMade = 1;
+        }
+    } else {
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                // if the slot is empty fill for CPU
+                if (gameGrid[i][j] == 0) {
+                    // 2 represents a CPU placement of an O
+                    tictactoeCPUCursor.y = i;
+                    tictactoeCPUCursor.x = j;
+                    tictactoeDisplayCPUPlay();
+                    gameGrid[i][j] = 2;
+                    break; // exit the for loops
+                }
+            }
+        }
+    }
+}
 // * General helpers
 void tictactoeResetGrid() {
     int i;
@@ -289,8 +349,7 @@ void tictactoeDrawGameGrid(TFT_eSPI tft) {
     }
 }
 
-//*X and O display
-// TODO: display user and Cpu play
+// * X and O display
 void tictactoeDisplayUserPlay(TFT_eSPI tft) {
     // left to right up to down line
     tft.drawLine(
@@ -331,7 +390,7 @@ void tictactoeDisplayCPUPlay(TFT_eSPI tft) {
         TFT_RED);
 }
 
-//*Cursor display
+// * Cursor display
 void tictactoeDrawCursor(TFT_eSPI tft) {
     // cursor indicator similar to battleship but with new block size
     tft.drawRect(
@@ -361,6 +420,7 @@ void tictactoeEraseCursor(TFT_eSPI tft) {
         // color
         TFT_BLACK);
 }
+
 // ===== Webserver =============================================================
 
 // TODO: Implement tictactoe webserver
