@@ -127,7 +127,7 @@ void battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
             while (digitalRead(A_BUTTON))
                 ;
 
-            if (!shotsTaken[cursor.row][cursor.column]) break; // Stop looping
+            if (!playerShots[cursor.row][cursor.column]) break; // Stop looping
         }
     }
 
