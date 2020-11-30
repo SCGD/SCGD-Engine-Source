@@ -60,6 +60,7 @@ void battleshipPlayGame(TFT_eSPI tft) {
 
 void battleshipEventLoop(TFT_eSPI tft) {
     int score = 0;
+    battleshipUpdateScreen(tft, score); // Initial update of scoring
 
     while (shotsTaken < TOTAL_SHOTS) {
         score += battleshipPlayPlayerTurn(tft);
