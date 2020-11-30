@@ -399,9 +399,9 @@ void tictactoeDrawCursor(TFT_eSPI tft) {
         // y coordinate
         70 + DISPLAYBLOCKSIZE * tictactoeCursor.y + 1,
         // height
-        blockSideSize,
+        DISPLAYBLOCKSIZE - 1,
         // width
-        blockSideSize,
+        DISPLAYBLOCKSIZE - 1,
         // color
         TFT_GREEN);
 }
@@ -414,9 +414,9 @@ void tictactoeEraseCursor(TFT_eSPI tft) {
         // y coordinate
         70 + DISPLAYBLOCKSIZE * tictactoeCursor.y + 1,
         // height
-        blockSideSize,
+        DISPLAYBLOCKSIZE - 1,
         // width
-        blockSideSize,
+        DISPLAYBLOCKSIZE - 1,
         // color
         TFT_BLACK);
 }
