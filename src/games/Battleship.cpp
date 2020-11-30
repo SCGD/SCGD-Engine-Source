@@ -58,11 +58,15 @@ void battleshipPlayGame(TFT_eSPI tft) {
 
 // ===== Game looping ==========================================================
 
-void battleshipEventLoop(TFT_eSPI tft) {}
+void battleshipEventLoop(TFT_eSPI tft) {
+    // TODO: Call playPlayerTurn
+    // TODO: Score calculation
+    // TODO: Display rewriting
+}
 
 // ===== Controller ============================================================
 
-void battleshipPlayPlayerTurn() { // Returns 0 if miss, 1 if hit
+void battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
 
     // Loop for player inputs
     while (true) {
@@ -72,7 +76,7 @@ void battleshipPlayPlayerTurn() { // Returns 0 if miss, 1 if hit
                 ;
             // Bounds check
             if (cursor.row > 0) { // Top of bounding box
-                cursor.row -= 1;  // Move up one
+                battleshipMoveCursor(cursor.row - 1, cursor.column);
             }
         }
         if (digitalRead(DOWN_BUTTON)) {
@@ -80,7 +84,7 @@ void battleshipPlayPlayerTurn() { // Returns 0 if miss, 1 if hit
                 ;
             // Bounds check
             if (cursor.row < 7) { // Bottom of bounding box
-                cursor.row += 1;  // Move down one
+                battleshipMoveCursor(cursor.row + 1, cursor.column);
             }
         }
         if (digitalRead(LEFT_BUTTON)) {
@@ -88,7 +92,7 @@ void battleshipPlayPlayerTurn() { // Returns 0 if miss, 1 if hit
                 ;
             // Bounds check
             if (cursor.column > 0) { // Left of bounding box
-                cursor.column -= 1;  // Move left one
+                battleshipMoveCursor(cursor.row, cursor.column - 1);
             }
         }
         if (digitalRead(RIGHT_BUTTON)) {
@@ -96,7 +100,7 @@ void battleshipPlayPlayerTurn() { // Returns 0 if miss, 1 if hit
                 ;
             // Bounds check
             if (cursor.column < 7) { // Right of bounding box
-                cursor.column += 1;  // Move right one
+                battleshipMoveCursor(cursor.row, cursor.column + 1);
             }
         }
 
@@ -150,7 +154,18 @@ void battleshipDrawInitializeGameBoard(TFT_eSPI tft) {
     }
 }
 
-void battleshipMoveCursor(int row, int column) {}
+void battleshipMoveCursor(int row, int column) {
+    // Remove the current selection box
+    tft.drawRect(cursor.xPos, cursor.yPos, 20, 20, TFT_WHITE);
+    // Set the new row and column
+    cursor.row = row;
+    cursor.column = column;
+    // Calculate xPos and yPos
+    cursor.xPos = 40 + (column * 20);
+    cursor.yPos = 40 + (row * 20);
+    // Update the selection box
+    tft.drawRect(cursor.xPos, cursor.yPos, 20, 20, TFT_YELLOW);
+}
 
 // ===== Webserver =============================================================
 
