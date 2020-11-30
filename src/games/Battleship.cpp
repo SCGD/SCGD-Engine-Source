@@ -105,6 +105,7 @@ int battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
 
     // Loop for player inputs
     while (true) {
+        delay(75); // Added for de-bouncing
         if (digitalRead(UP_BUTTON)) {
             while (digitalRead(UP_BUTTON))
                 ;

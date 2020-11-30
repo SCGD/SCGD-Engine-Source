@@ -124,6 +124,7 @@ void tictactoeEventLoop(TFT_eSPI tft) {
 void tictactoePlayPlayerTurn(TFT_eSPI tft) {
     // waiting for button input
     while (true) {
+        delay(75); // Added for de-bouncing
         if (digitalRead(UP_BUTTON)) {
             while (digitalRead(UP_BUTTON))
                 ;
