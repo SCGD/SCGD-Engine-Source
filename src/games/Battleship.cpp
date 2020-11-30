@@ -33,7 +33,7 @@ int shotsTaken;               // Number of shots taken
 
 // ===== Initialization ========================================================
 
-int battleshipPlayGame(TFT_eSPI tft) {
+void battleshipPlayGame(TFT_eSPI tft) {
     // Start game with popup
     battleshipDrawStartGamePopup(tft);
     while (true) {
@@ -86,7 +86,7 @@ void battleshipEventLoop(TFT_eSPI tft) {
 
 // ===== Controller ============================================================
 
-void battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
+int battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
 
     // Loop for player inputs
     while (true) {

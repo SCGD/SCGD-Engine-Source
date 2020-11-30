@@ -21,9 +21,9 @@ tictactoe_cursor_t tictactoeCPUCursor;
 
 int gameGrid[3][3] = {0};
 int tictactoeFinish = 0; // Indicator for completion of game
-const char CPUWins[15] = "   CPU Wins!  ";
-const char UserWins[15] = "  User Wins!  ";
-const char drawWins[15] = "    Draw!     ";
+char CPUWins[15] = "   CPU Wins!  ";
+char UserWins[15] = "  User Wins!  ";
+char drawWins[15] = "    Draw!     ";
 
 // ===== Initialization ========================================================
 
