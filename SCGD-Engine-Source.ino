@@ -152,6 +152,8 @@ void handleMenuSelect() {
                         // TODO: Test
                         break;
                 }
+
+                hasChosenGame = 0; // Prevents issues with double pressing
             }
         }
     }
