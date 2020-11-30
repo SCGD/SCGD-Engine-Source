@@ -90,7 +90,6 @@ void battleshipPlayPlayerTurn(TFT_eSPI tft) { // Returns 0 if miss, 1 if hit
 
     // Loop for player inputs
     while (true) {
-        // TODO: Move cursor values
         if (digitalRead(UP_BUTTON)) {
             while (digitalRead(UP_BUTTON))
                 ;
