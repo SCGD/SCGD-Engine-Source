@@ -189,7 +189,7 @@ void battleshipDrawInitializeGameBoard(TFT_eSPI tft) {
 
 void battleshipMoveCursor(TFT_eSPI tft, int row, int column) {
     // Remove the current selection box
-    tft.drawRect(cursor.xPos, cursor.yPos, 20, 20, TFT_WHITE);
+    tft.drawRect(cursor.xPos, cursor.yPos, 21, 21, TFT_WHITE);
     // Set the new row and column
     cursor.row = row;
     cursor.column = column;
@@ -197,7 +197,7 @@ void battleshipMoveCursor(TFT_eSPI tft, int row, int column) {
     cursor.xPos = 40 + (column * 20);
     cursor.yPos = 40 + (row * 20);
     // Update the selection box
-    tft.drawRect(cursor.xPos, cursor.yPos, 20, 20, TFT_YELLOW);
+    tft.drawRect(cursor.xPos, cursor.yPos, 21, 21, TFT_YELLOW);
 }
 
 void battleshipUpdateScreen(TFT_eSPI tft, int score) {
