@@ -77,6 +77,7 @@ void handlePopupClose() {
         // Wait for unpress
         while (digitalRead(A_BUTTON))
             ;
+        delay(150);
 
         menuDrawSelectionScreen();
         hasEnteredSelection = 1; // Track that we've seen the label
@@ -89,26 +90,31 @@ void handleMenuSelect() {
             while (digitalRead(UP_BUTTON))
                 ;
             // TODO: Add debouncing delay
+            delay(150);
             menuMoveCursorRelative(-1);
         }
         if (digitalRead(DOWN_BUTTON)) {
             while (digitalRead(DOWN_BUTTON))
                 ;
+            delay(150);
             menuMoveCursorRelative(1);
         }
         if (digitalRead(LEFT_BUTTON)) {
             while (digitalRead(LEFT_BUTTON))
                 ;
+            delay(150);
             menuMoveCursorRelative(-1);
         }
         if (digitalRead(RIGHT_BUTTON)) {
             while (digitalRead(RIGHT_BUTTON))
                 ;
+            delay(150);
             menuMoveCursorRelative(1);
         }
         if (digitalRead(B_BUTTON)) {
             while (digitalRead(B_BUTTON))
                 ;
+            delay(150);
 
             if (hasChosenGame) {
                 hasChosenGame = 0;
@@ -118,6 +124,7 @@ void handleMenuSelect() {
         if (digitalRead(A_BUTTON)) {
             while (digitalRead(A_BUTTON))
                 ;
+            delay(150);
 
             if (!hasChosenGame) {
                 switch (menuCursor.game) {

@@ -22,6 +22,7 @@
 // Imports
 #include <SPI.h>      // Serial Peripheral Interface main library
 #include <TFT_eSPI.h> // Graphics/fonts library for ILI9341 driver
+#include <stdlib.h>
 
 // Display Function Prototypes
 void drawMarginBoundingBox(TFT_eSPI tft, uint16_t color);
